@@ -23,7 +23,8 @@ public class Stornierung extends Aktion {
     }
 
     @Override
-    public void printProtokoll() {
-        System.out.println("\t\tStornierung der Reservierung " + getReservierung().getReservierungsNr() + " am " + getDatumsFormatierer().format(getAktionsDatum()) + " um " + getAktionsZeitpunkt());
+    public String printProtokoll() {
+        //System.out.println("\t\tStornierung der Reservierung " + getReservierung().getReservierungsNr() + " am " + getDatumsFormatierer().format(getAktionsDatum()) + " um " + getAktionsZeitpunkt());
+        return "\t\tStornierung der Reservierung " + getReservierung().getReservierungsNr() + " am " + getDatumsFormatierer().format(getAktionsDatum()) + " um " + getAktionsZeitpunkt() +"\n";
     }
 }

@@ -62,9 +62,11 @@ public abstract class Aktion extends Component {
      * dieser abstrakten Klasse implementiert werden, da diese nur die individuellen
      * "printProtokoll()"-Methoden aufruft und sich auch bei den konkreten Klassen nicht aendert.
      * @param zeitraum
+     * @return
      */
     @Override
-    public void printProtokollImZeitraum(Zeitraum zeitraum) {
-        if(aktionsDatum.compareTo(zeitraum.getStartDatum()) >=0 && aktionsDatum.compareTo(zeitraum.getEndDatum()) <= 0) printProtokoll();
+    public String printProtokollImZeitraum(Zeitraum zeitraum) {
+        if(aktionsDatum.compareTo(zeitraum.getStartDatum()) >=0 && aktionsDatum.compareTo(zeitraum.getEndDatum()) <= 0) return printProtokoll();
+        return "";
     }
 }

@@ -36,27 +36,34 @@ public class Lernplatz extends ProtokollComposite {
     /**
      * Bei der Protokollausgabe wird die Kapazitaet des Lernplatzes ueberprueft.
      * Je nach dem wird die Ausgabe des Protokolls angepasst.
+     * @return
      */
     @Override
-    public void printProtokoll() {
+    public String printProtokoll() {
+        String str = "";
         if(kapazitaet ==1){
-            System.out.println("\tLernplatz " + nummer + " fuer " + kapazitaet + " Person");
-       
+            //System.out.println("\tLernplatz " + nummer + " fuer " + kapazitaet + " Person");
+            str = "\tLernplatz " + nummer + " fuer " + kapazitaet + " Person\n";
         }else{
-            System.out.println("\tLernplatz " + nummer + " fuer " + kapazitaet + " Personen");
+            //System.out.println("\tLernplatz " + nummer + " fuer " + kapazitaet + " Personen");
+            str = "\tLernplatz " + nummer + " fuer " + kapazitaet + " Personen\n";
         }
-        super.printProtokoll();
+        str = str + super.printProtokoll();
+        return str;
     }
 
     @Override
-    public void printProtokollImZeitraum(Zeitraum zeitraum) {
+    public String printProtokollImZeitraum(Zeitraum zeitraum) {
+        String str = "";
         if(kapazitaet ==1){
-            System.out.println("\tLernplatz " + nummer + " fuer " + kapazitaet + " Person");
-
+            //System.out.println("\tLernplatz " + nummer + " fuer " + kapazitaet + " Person");
+            str = "\tLernplatz " + nummer + " fuer " + kapazitaet + " Person\n";
         }else{
-            System.out.println("\tLernplatz " + nummer + " fuer " + kapazitaet + " Personen");
+            //System.out.println("\tLernplatz " + nummer + " fuer " + kapazitaet + " Personen");
+            str = "\tLernplatz " + nummer + " fuer " + kapazitaet + " Personen\n";
         }
-        super.printProtokollImZeitraum(zeitraum);
+        str = str + super.printProtokollImZeitraum(zeitraum);
+        return str;
     }
 
     /**

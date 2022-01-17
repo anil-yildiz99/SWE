@@ -9,20 +9,24 @@ import java.util.List;
  * Blaetter sind oder auch selbst wieder zusammengesetzt sein koennen.
  */
 public abstract class ProtokollComposite extends Component {
-    List<Component> protokoll = new ArrayList<>();
+    private List<Component> protokoll = new ArrayList<>();
 
     @Override
-    public void printProtokoll() {
+    public String printProtokoll() {
+        String str = "";
         for(Component c : protokoll){
-            c.printProtokoll();
+            str = str + c.printProtokoll();
         }
+        return str;
     }
 
     @Override
-    public void printProtokollImZeitraum(Zeitraum zeitraum) {
+    public String printProtokollImZeitraum(Zeitraum zeitraum) {
+        String str = "";
         for(Component c : protokoll){
-            c.printProtokollImZeitraum(zeitraum);
+            str = str + c.printProtokollImZeitraum(zeitraum);
         }
+        return str;
     }
 
     /**
@@ -36,5 +40,9 @@ public abstract class ProtokollComposite extends Component {
 
     public boolean delete(Component comp) {
         return this.protokoll.remove(comp);
+    }
+
+    public List<Component> getProtokoll() {
+        return protokoll;
     }
 }

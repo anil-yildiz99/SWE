@@ -6,6 +6,6 @@ package model;
  * Klassen (also die Leaf und Composite Klassen) implementieren
  */
 public abstract class Component {
-    public abstract void printProtokoll();
-    public abstract void printProtokollImZeitraum(Zeitraum zeitraum);
+    public abstract String printProtokoll();
+    public abstract String printProtokollImZeitraum(Zeitraum zeitraum);
 }

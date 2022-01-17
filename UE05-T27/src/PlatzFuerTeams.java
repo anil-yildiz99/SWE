@@ -39,9 +39,10 @@ public class PlatzFuerTeams {
         lp1.add(belegung1);
         lp1.add(stornierung1);
 
-        wrapper.printProtokoll();
+        System.out.println(wrapper.printProtokoll());
         System.out.println();
-        wrapper.printProtokollImZeitraum(zeitraum);
+        System.out.println(wrapper.printProtokollImZeitraum(zeitraum));
+
 
     }
 

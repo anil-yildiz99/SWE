@@ -68,15 +68,22 @@ public class Reservierung extends Aktion {
     /**
      * In der Ausgabe einer Reservierung wird ueberprueft, fuer wie viele Personen ein bestimmter
      * Lernplatz reserviert wird. Je nach dem wird die Ausgabe des Protokolls angepasst.
+     * @return
      */
     @Override
-    public void printProtokoll() {
+    public String printProtokoll() {
+        String str = "";
         if(personenAnzahl==1) {
-            System.out.println("\t\tReservierung " + reservierungsNr + " fuer " + getDatumsFormatierer().format(getReservierungsDatum()) + " von " + getVon() + " bis " + getBis() + " fuer " + personenAnzahl + " Person\n" +
-                    "\t\t\tdurch " + getStudent().getMatrikelnummer() + " am " + getDatumsFormatierer().format(getAktionsDatum()) + " um " + getAktionsZeitpunkt());
+            //System.out.println("\t\tReservierung " + reservierungsNr + " fuer " + getDatumsFormatierer().format(getReservierungsDatum()) + " von " + getVon() + " bis " + getBis() + " fuer " + personenAnzahl + " Person\n" +
+            //        "\t\t\tdurch " + getStudent().getMatrikelnummer() + " am " + getDatumsFormatierer().format(getAktionsDatum()) + " um " + getAktionsZeitpunkt());
+            str = "\t\tReservierung " + reservierungsNr + " fuer " + getDatumsFormatierer().format(getReservierungsDatum()) + " von " + getVon() + " bis " + getBis() + " fuer " + personenAnzahl + " Person\n" +
+                    "\t\t\tdurch " + getStudent().getMatrikelnummer() + " am " + getDatumsFormatierer().format(getAktionsDatum()) + " um " + getAktionsZeitpunkt() +"\n";
         }else{
-            System.out.println("\t\tReservierung " + reservierungsNr + " fuer " + getDatumsFormatierer().format(getReservierungsDatum()) + " von " + getVon() + " bis " + getBis() + " fuer " + personenAnzahl + " Personen\n" +
-                    "\t\t\tdurch " + getStudent().getMatrikelnummer() + " am " + getDatumsFormatierer().format(getAktionsDatum()) + " um " + getAktionsZeitpunkt());
+            //System.out.println("\t\tReservierung " + reservierungsNr + " fuer " + getDatumsFormatierer().format(getReservierungsDatum()) + " von " + getVon() + " bis " + getBis() + " fuer " + personenAnzahl + " Personen\n" +
+            //        "\t\t\tdurch " + getStudent().getMatrikelnummer() + " am " + getDatumsFormatierer().format(getAktionsDatum()) + " um " + getAktionsZeitpunkt());
+            str = "\t\tReservierung " + reservierungsNr + " fuer " + getDatumsFormatierer().format(getReservierungsDatum()) + " von " + getVon() + " bis " + getBis() + " fuer " + personenAnzahl + " Personen\n" +
+                    "\t\t\tdurch " + getStudent().getMatrikelnummer() + " am " + getDatumsFormatierer().format(getAktionsDatum()) + " um " + getAktionsZeitpunkt() +"\n";
         }
+        return str;
     }
 }

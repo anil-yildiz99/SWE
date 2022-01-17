@@ -1,6 +1,5 @@
 package Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
@@ -30,7 +29,7 @@ class BelegungTest extends AktionTest{
 		PrintStream p=new PrintStream(b);
 		System.setOut(p);
 		
-		text = "\t\tBelegung am 06.12.2021 von 09:21 bis 09:48 mit Reservierung R08154711\n";
+		text = "\t\tBelegung am 06.12.2021 von 09:21 bis 09:48 mit Reservierung R08154711"+System.lineSeparator();
 		
 		try {
 			Reservierung reservierung = new Reservierung(LocalDate.of(2021, 12, 1), LocalTime.of(23, 18),
