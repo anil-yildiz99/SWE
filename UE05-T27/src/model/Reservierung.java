@@ -78,7 +78,7 @@ public class Reservierung extends Aktion {
             //        "\t\t\tdurch " + getStudent().getMatrikelnummer() + " am " + getDatumsFormatierer().format(getAktionsDatum()) + " um " + getAktionsZeitpunkt());
             str = "\t\tReservierung " + reservierungsNr + " fuer " + getDatumsFormatierer().format(getReservierungsDatum()) + " von " + getVon() + " bis " + getBis() + " fuer " + personenAnzahl + " Person\n" +
                     "\t\t\tdurch " + getStudent().getMatrikelnummer() + " am " + getDatumsFormatierer().format(getAktionsDatum()) + " um " + getAktionsZeitpunkt() +"\n";
-        }else{
+        } else{
             //System.out.println("\t\tReservierung " + reservierungsNr + " fuer " + getDatumsFormatierer().format(getReservierungsDatum()) + " von " + getVon() + " bis " + getBis() + " fuer " + personenAnzahl + " Personen\n" +
             //        "\t\t\tdurch " + getStudent().getMatrikelnummer() + " am " + getDatumsFormatierer().format(getAktionsDatum()) + " um " + getAktionsZeitpunkt());
             str = "\t\tReservierung " + reservierungsNr + " fuer " + getDatumsFormatierer().format(getReservierungsDatum()) + " von " + getVon() + " bis " + getBis() + " fuer " + personenAnzahl + " Personen\n" +

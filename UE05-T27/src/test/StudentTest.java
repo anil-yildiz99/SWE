@@ -1,4 +1,4 @@
-package Test;
+package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,10 +25,14 @@ class StudentTest {
 	}
 
 	@Test
-	void testGetMatrikelnummer() throws StudentException {
+	void testGetMatrikelnummer() {
 		assertEquals("k12345678", student.getMatrikelnummer());
 		
-		student = new Student("k87654321");
+		try {
+			student = new Student("k87654321");
+		} catch (StudentException e) {
+			e.printStackTrace();
+		}
 		assertEquals("k87654321", student.getMatrikelnummer());
 	}
 
