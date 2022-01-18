@@ -16,7 +16,6 @@ public class Student {
             if ((matrikelnummer.charAt(i) < 48) || (matrikelnummer.charAt(i) > 57))
                 throw new StudentException();
         }
-
         this.matrikelnummer = matrikelnummer;
     }
 

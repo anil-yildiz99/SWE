@@ -24,7 +24,6 @@ public class Lernzone extends ProtokollComposite {
 
     @Override
     public String printProtokoll() {
-        //System.out.println("Lernzone: " + name);
         String str = "Lernzone: " + name +"\n";
         str = str + super.printProtokoll();
         return str;
@@ -32,10 +31,6 @@ public class Lernzone extends ProtokollComposite {
 
     @Override
     public String printProtokollImZeitraum(Zeitraum zeitraum) {
-        //System.out.println("Lernzone: " + name);
-        //super.printProtokollImZeitraum(zeitraum);
-        //return "";
-
         String str = "Lernzone: " + name +"\n";
         str = str + super.printProtokollImZeitraum(zeitraum);
         return str;

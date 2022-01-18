@@ -42,10 +42,8 @@ public class Lernplatz extends ProtokollComposite {
     public String printProtokoll() {
         String str = "";
         if(kapazitaet ==1){
-            //System.out.println("\tLernplatz " + nummer + " fuer " + kapazitaet + " Person");
             str = "\tLernplatz " + nummer + " fuer " + kapazitaet + " Person\n";
         }else{
-            //System.out.println("\tLernplatz " + nummer + " fuer " + kapazitaet + " Personen");
             str = "\tLernplatz " + nummer + " fuer " + kapazitaet + " Personen\n";
         }
         str = str + super.printProtokoll();
@@ -56,10 +54,8 @@ public class Lernplatz extends ProtokollComposite {
     public String printProtokollImZeitraum(Zeitraum zeitraum) {
         String str = "";
         if(kapazitaet ==1){
-            //System.out.println("\tLernplatz " + nummer + " fuer " + kapazitaet + " Person");
             str = "\tLernplatz " + nummer + " fuer " + kapazitaet + " Person\n";
         }else{
-            //System.out.println("\tLernplatz " + nummer + " fuer " + kapazitaet + " Personen");
             str = "\tLernplatz " + nummer + " fuer " + kapazitaet + " Personen\n";
         }
         str = str + super.printProtokollImZeitraum(zeitraum);

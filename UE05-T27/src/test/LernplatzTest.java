@@ -5,8 +5,6 @@ import model.exceptions.InvalidCompositeException;
 import model.exceptions.StudentException;
 import org.junit.jupiter.api.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
 

@@ -49,8 +49,6 @@ public class Belegung extends Aktion {
 
     @Override
     public String printProtokoll() {
-        //System.out.println("\t\tBelegung am " + this.getDatumsFormatierer().format(reservierung.getReservierungsDatum()) +
-        //       " von " + getVon() + " bis " + getBis() + " mit Reservierung " + reservierung.getReservierungsNr());
         return "\t\tBelegung am " + this.getDatumsFormatierer().format(reservierung.getReservierungsDatum()) +
                 " von " + getVon() + " bis " + getBis() + " mit Reservierung " + reservierung.getReservierungsNr() +"\n";
     }
