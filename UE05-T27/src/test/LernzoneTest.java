@@ -20,7 +20,7 @@ class LernzoneTest {
 	private Stornierung stor;
 
 	@BeforeAll
-	public void initActions() throws StudentException {
+	void initActions() throws StudentException {
 		res = new Reservierung(
 				LocalDate.of(2021, 12, 1),
 				LocalTime.of(23, 18),
@@ -157,7 +157,7 @@ class LernzoneTest {
 		assertTrue(lernzone.getProtokoll().isEmpty());
 	}
 	@Test
-	void invalidCompositionBelgungInLernzone(){
+	void invalidCompositionBelegungInLernzone(){
 		Exception exception = assertThrows(InvalidCompositeException.class, () ->
 				lernzone.add(new Belegung(
 							res.getReservierungsDatum(),
