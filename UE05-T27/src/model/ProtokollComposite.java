@@ -1,5 +1,7 @@
 package model;
 
+import model.exceptions.InvalidCompositeException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +36,7 @@ public abstract class ProtokollComposite extends Component {
      * (also Composites wie z.B. Lernzonen usw. bzw. Leafs wie z.B. Stornierungen
      * usw.) hinzufuegen bzw. entfernen zu koennen.
      */
-    public boolean add(Component comp){
+    public boolean add(Component comp) throws InvalidCompositeException {
         return this.protokoll.add(comp);
     }
 

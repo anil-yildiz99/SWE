@@ -28,16 +28,32 @@ public class PlatzFuerTeams {
         Stornierung stornierung1 = new Stornierung(LocalDate.of(2021, 12, 5), LocalTime.of(18, 23),rs2);
         				               		
         //Fehlertests:
-        lz1.add(lz1);
-        lp1.add(lp1);
-        lz1.add(belegung1);
+        try {
+            lz1.add(lz1);
+        } catch (model.exceptions.InvalidCompositeException e) {
+            System.err.println(e.getMessage());
+        }
+        try {
+            lp1.add(lp1);
+        } catch (model.exceptions.InvalidCompositeException e) {
+            System.err.println(e.getMessage());
+        }
+        try {
+            lz1.add(belegung1);
+        } catch (model.exceptions.InvalidCompositeException e) {
+            System.err.println(e.getMessage());
+        }
 
-        wrapper.add(lz1);
-        lz1.add(lp1);
-        lp1.add(rs1);
-        lp1.add(rs2);
-        lp1.add(belegung1);
-        lp1.add(stornierung1);
+        try {
+            wrapper.add(lz1);
+            lz1.add(lp1);
+            lp1.add(rs1);
+            lp1.add(rs2);
+            lp1.add(belegung1);
+            lp1.add(stornierung1);
+        } catch (model.exceptions.InvalidCompositeException e) {
+            System.err.println(e.getMessage());
+        }
 
         System.out.println(wrapper.printProtokoll());
         System.out.println();

@@ -75,13 +75,8 @@ public class Lernplatz extends ProtokollComposite {
      * @return
      */
     @Override
-    public boolean add(Component comp) {
-        try{
-            if(!(comp instanceof Aktion)) throw new InvalidCompositeException(this, comp);
-            return super.add(comp);
-        }catch(InvalidCompositeException ex){
-            System.err.println(ex.getMessage());
-        }
-        return false;
+    public boolean add(Component comp) throws InvalidCompositeException {
+        if(!(comp instanceof Aktion)) throw new InvalidCompositeException(this, comp);
+        return super.add(comp);
     }
 }

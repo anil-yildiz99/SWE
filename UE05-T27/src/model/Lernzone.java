@@ -50,13 +50,8 @@ public class Lernzone extends ProtokollComposite {
      * @return
      */
     @Override
-    public boolean add(Component comp) {
-        try {
-            if(!(comp instanceof Lernplatz)) throw new InvalidCompositeException(this, comp);
-            return super.add(comp);
-        } catch(InvalidCompositeException ex){
-            System.err.println(ex.getMessage());
-        }
-        return false;
+    public boolean add(Component comp) throws InvalidCompositeException {
+        if(!(comp instanceof Lernplatz)) throw new InvalidCompositeException(this, comp);
+        return super.add(comp);
     }
 }
