@@ -7,9 +7,6 @@ import model.exceptions.InvalidCompositeException;
 import model.exceptions.StudentException;
 import org.junit.jupiter.api.*;
 
-import javax.swing.*;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -18,21 +15,10 @@ class LernzoneTest {
 
 	private Lernzone lernzone;
 	private Reservierung res;
+	private Reservierung res2;
 	private Belegung bel;
 	private Stornierung stor;
 
-	//private final PrintStream originalOut = System.out;
-	private final PrintStream originalErr = System.err;
-	//private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-	private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-
-
-
-	@BeforeAll
-	public void setUpStreams() {
-		//System.setOut(new PrintStream(outContent));
-		System.setErr(new PrintStream(errContent));
-	}
 	@BeforeAll
 	public void initActions() throws StudentException {
 		res = new Reservierung(
@@ -44,25 +30,23 @@ class LernzoneTest {
 				LocalTime.of(10, 0),
 				3,
 				new Student("K12345678"));
+		res2 = new Reservierung(
+				LocalDate.of(2021, 12, 22),
+				LocalTime.of(1, 1),
+				"R87654321",
+				LocalDate.of(2021, 12, 29),
+				LocalTime.of(22, 15),
+				LocalTime.of(23, 55),
+				7,
+				new Student("K12345678"));
 		bel = new Belegung(res.getReservierungsDatum(), LocalTime.of(9, 21), res, LocalTime.of(9, 21), LocalTime.of(9, 48));
-		stor = new Stornierung(LocalDate.of(2021, 12, 5), LocalTime.of(18, 23),res);
+		stor = new Stornierung(LocalDate.of(2021, 12, 30), LocalTime.of(18, 23),res2);
 
-	}
-
-	@AfterAll
-	public void restoreStreams() {
-		//System.setOut(originalOut);
-		System.setErr(originalErr);
 	}
 
 	@BeforeEach
 	void initTest() {
 		lernzone = new Lernzone("S3-EG-Z01");
-
-	}
-
-	@AfterEach
-	void tearDown() {
 	}
 
 	@Test
@@ -79,7 +63,7 @@ class LernzoneTest {
 	}
 
 	@Test
-	void printProtokoll() {
+	void printProtokoll() throws InvalidCompositeException {
 		assertEquals("Lernzone: S3-EG-Z01\n", lernzone.printProtokoll());
 		Lernplatz lp = new Lernplatz(1,5);
 		lernzone.add(lp);
@@ -105,61 +89,93 @@ class LernzoneTest {
 				"\t\tBelegung am 03.12.2021 von 09:21 bis 09:48 mit Reservierung R08154711\n"+
 				"\tLernplatz 2 fuer 1 Person\n", lernzone.printProtokoll());
 
+		lp.add(res2);
 		lp.add(stor);
 		assertEquals("Lernzone: S3-EG-Z01\n" +
 				"\tLernplatz 1 fuer 5 Personen\n" +
 				"\t\tReservierung R08154711 fuer 03.12.2021 von 09:15 bis 10:00 fuer 3 Personen\n" +
 				"\t\t\tdurch K12345678 am 01.12.2021 um 23:18\n" +
 				"\t\tBelegung am 03.12.2021 von 09:21 bis 09:48 mit Reservierung R08154711\n" +
-				"\t\tStornierung der Reservierung R08154711 am 05.12.2021 um 18:23\n" +
+				"\t\tReservierung R87654321 fuer 29.12.2021 von 22:15 bis 23:55 fuer 7 Personen\n"+
+				"\t\t\tdurch K12345678 am 22.12.2021 um 01:01\n"+
+				"\t\tStornierung der Reservierung R87654321 am 30.12.2021 um 18:23\n" +
 				"\tLernplatz 2 fuer 1 Person\n", lernzone.printProtokoll());
 	}
 
 	@Test
-	void printProtokollImZeitraum() {
-		Zeitraum zeitraum = new Zeitraum(LocalDate.of(2021, 11, 30), LocalDate.of(2021, 12, 4));
+	void printProtokollImZeitraum() throws InvalidCompositeException {
+		Zeitraum zeitraum = new Zeitraum(LocalDate.of(2021, 11, 30), LocalDate.of(2021, 12, 29));
 		assertEquals("Lernzone: S3-EG-Z01\n", lernzone.printProtokollImZeitraum(zeitraum));
-		Lernplatz lp = new Lernplatz(1,5);
+		Lernplatz lp = new Lernplatz(1, 5);
 		lernzone.add(lp);
 		assertEquals("Lernzone: S3-EG-Z01\n\tLernplatz 1 fuer 5 Personen\n", lernzone.printProtokollImZeitraum(zeitraum));
 
-		lp.add(res);
+		lp.add(res2);
 		assertEquals("Lernzone: S3-EG-Z01\n" +
 				"\tLernplatz 1 fuer 5 Personen\n" +
-				"\t\tReservierung R08154711 fuer 03.12.2021 von 09:15 bis 10:00 fuer 3 Personen\n"+
-				"\t\t\tdurch K12345678 am 01.12.2021 um 23:18\n", lernzone.printProtokollImZeitraum(zeitraum));
+				"\t\tReservierung R87654321 fuer 29.12.2021 von 22:15 bis 23:55 fuer 7 Personen\n" +
+				"\t\t\tdurch K12345678 am 22.12.2021 um 01:01\n", lernzone.printProtokollImZeitraum(zeitraum));
+
 		lp.add(stor);
 		assertEquals("Lernzone: S3-EG-Z01\n" +
 				"\tLernplatz 1 fuer 5 Personen\n" +
-				"\t\tReservierung R08154711 fuer 03.12.2021 von 09:15 bis 10:00 fuer 3 Personen\n"+
-				"\t\t\tdurch K12345678 am 01.12.2021 um 23:18\n", lernzone.printProtokollImZeitraum(zeitraum));
+				"\t\tReservierung R87654321 fuer 29.12.2021 von 22:15 bis 23:55 fuer 7 Personen\n" +
+				"\t\t\tdurch K12345678 am 22.12.2021 um 01:01\n", lernzone.printProtokollImZeitraum(zeitraum));
 	}
 
 	@Test
 	void add() {
-		assertEquals(0, lernzone.getProtokoll().size());
-		lernzone.add(new Lernzone("S4-EG-Z01"));
-		assertEquals(0, lernzone.getProtokoll().size());
-		assertEquals("ungueltige Verschachtelung: Lernzone kann kein Teil von Lernzone sein" + System.lineSeparator(), errContent.toString());
-		errContent.reset();
-
-		lernzone.add(res);
-		assertEquals(0, lernzone.getProtokoll().size());
-		assertEquals("ungueltige Verschachtelung: Reservierung kann kein Teil von Lernzone sein" + System.lineSeparator(), errContent.toString());
-		errContent.reset();
-
-		lernzone.add(bel);
-		assertEquals(0, lernzone.getProtokoll().size());
-		assertEquals("ungueltige Verschachtelung: Belegung kann kein Teil von Lernzone sein" + System.lineSeparator(), errContent.toString());
-		errContent.reset();
-
-		lernzone.add(stor);
-		assertEquals(0, lernzone.getProtokoll().size());
-		assertEquals("ungueltige Verschachtelung: Stornierung kann kein Teil von Lernzone sein" + System.lineSeparator(), errContent.toString());
-		errContent.reset();
-
-		lernzone.add(new Lernplatz(1,5));
+		assertTrue(lernzone.getProtokoll().isEmpty());
+		try {
+			assertTrue(lernzone.add(new Lernplatz(1,5)));
+		} catch (model.exceptions.InvalidCompositeException e) {
+			fail(e.getMessage());
+		}
 		assertEquals(1, lernzone.getProtokoll().size());
 	}
 
+	@Test
+	void invalidCompositionLernzoneInLernzone(){
+		Exception exception = assertThrows(InvalidCompositeException.class, () ->
+				lernzone.add(new Lernzone("S7-EG-Z01")));
+		assertEquals("ungueltige Verschachtelung: Lernzone kann kein Teil von Lernzone sein", exception.getMessage());
+		assertTrue(lernzone.getProtokoll().isEmpty());
+	}
+	@Test
+	void invalidCompositionReservierungInLernzone(){
+		Exception exception = assertThrows(InvalidCompositeException.class, () ->
+				lernzone.add(new Reservierung(
+									LocalDate.of(2021, 12, 1),
+									LocalTime.of(23, 18),
+									"R08154711",
+									LocalDate.of(2021, 12, 3),
+									LocalTime.of(9, 15),
+									LocalTime.of(10, 0),
+									3,
+									new Student("K12345678"))));
+		assertEquals("ungueltige Verschachtelung: Reservierung kann kein Teil von Lernzone sein", exception.getMessage());
+		assertTrue(lernzone.getProtokoll().isEmpty());
+	}
+	@Test
+	void invalidCompositionBelgungInLernzone(){
+		Exception exception = assertThrows(InvalidCompositeException.class, () ->
+				lernzone.add(new Belegung(
+							res.getReservierungsDatum(),
+							LocalTime.of(9, 21),
+							res,
+							LocalTime.of(9, 21),
+							LocalTime.of(9, 48))));
+		assertEquals("ungueltige Verschachtelung: Belegung kann kein Teil von Lernzone sein", exception.getMessage());
+		assertTrue(lernzone.getProtokoll().isEmpty());
+	}
+	@Test
+	void invalidCompositionStornierungInLernzone(){
+		Exception exception = assertThrows(InvalidCompositeException.class, () ->
+				lernzone.add(new Stornierung(
+						LocalDate.of(2021, 12, 5),
+						LocalTime.of(18, 23),
+						res)));
+		assertEquals("ungueltige Verschachtelung: Stornierung kann kein Teil von Lernzone sein", exception.getMessage());
+		assertTrue(lernzone.getProtokoll().isEmpty());
+	}
 }
