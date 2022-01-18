@@ -7,7 +7,7 @@ import java.time.LocalDate;
  * die von der Methode "printProtokollImZeitraum(Zeitraum zeitraum)" verwendet wird.
  */
 public class Zeitraum {
-	
+
 	private LocalDate startDatum;
 	private LocalDate endDatum;
 

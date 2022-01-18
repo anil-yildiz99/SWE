@@ -16,8 +16,8 @@ public class PlatzFuerTeams {
         Zeitraum zeitraum = new Zeitraum(LocalDate.of(2021, 11, 30), LocalDate.of(2021, 12, 4));
         Lernzone lz1 = new Lernzone("S3-EG-Z01");
         Lernplatz lp1 = new Lernplatz(1,4);
-              
-        
+
+
         Reservierung rs1 = new Reservierung(LocalDate.of(2021, 12, 1), LocalTime.of(23, 18),
                 "R08154711", LocalDate.of(2021, 12, 3),
                 LocalTime.of(9, 15), LocalTime.of(10, 0), 3, new Student("K12345678"));
@@ -26,7 +26,7 @@ public class PlatzFuerTeams {
                 LocalTime.of(9, 15), LocalTime.of(10, 0), 1, new Student("K12345679"));
         Belegung belegung1 = new Belegung(rs1.getReservierungsDatum(), LocalTime.of(9, 21), rs1, LocalTime.of(9, 21), LocalTime.of(9, 48));
         Stornierung stornierung1 = new Stornierung(LocalDate.of(2021, 12, 5), LocalTime.of(18, 23),rs2);
-        				               		
+
         //Fehlertests:
         try {
             lz1.add(lz1);

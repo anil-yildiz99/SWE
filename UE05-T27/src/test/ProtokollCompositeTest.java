@@ -36,7 +36,7 @@ class ProtokollCompositeTest {
                 LocalTime.of(12, 0),
                 7,
                 new Student("K12387546"));
-        Stornierung stor = new Stornierung(LocalDate.of(2022, 1, 3), LocalTime.of(2, 2),res2);
+        Stornierung stor = new Stornierung(LocalDate.of(2022, 1, 3), LocalTime.of(2, 2), res2);
         ProtokollWrapper wrapper = new ProtokollWrapper();
         wrapper.add(lz);
         lz.add(lp);
@@ -44,13 +44,13 @@ class ProtokollCompositeTest {
         lp.add(bel);
         lp.add(res2);
         lp.add(stor);
-        assertEquals(lp.getProtokoll().size(),4);
+        assertEquals(lp.getProtokoll().size(), 4);
         lp.delete(stor);                                  //Löschen einer Stornierung
-        assertEquals(lp.getProtokoll().size(),3);
+        assertEquals(lp.getProtokoll().size(), 3);
         lp.delete(res2);                                  //Löschen einer Reservierung
-        assertEquals(lp.getProtokoll().size(),2);
+        assertEquals(lp.getProtokoll().size(), 2);
         lp.delete(bel);                                   //Löschen einer Belegung
-        assertEquals(lp.getProtokoll().size(),1);
+        assertEquals(lp.getProtokoll().size(), 1);
 
         lz.delete(lp);                                    //Löschen eines Lernplatzes mit eigener Kindkomponente
         assertTrue(lz.getProtokoll().isEmpty());

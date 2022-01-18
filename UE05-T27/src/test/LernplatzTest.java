@@ -21,14 +21,6 @@ class LernplatzTest {
     private Belegung bel;
     private Stornierung stor;
 
-    private final PrintStream originalErr = System.err;
-    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-
-    @BeforeAll
-    public void setUpStreams() {
-        System.setErr(new PrintStream(errContent));
-    }
-
     @BeforeAll
     public void initActions() throws StudentException {
         res = new Reservierung(
@@ -53,19 +45,9 @@ class LernplatzTest {
         stor = new Stornierung(LocalDate.of(2021, 12, 25), LocalTime.of(12, 0), res2);
     }
 
-    @BeforeAll
-    public void initLernzone() {
-
-    }
-
     @BeforeEach
     void initTest() {
         lernplatz = new Lernplatz(5, 6);
-    }
-
-    @AfterAll
-    public void restoreStreams() {
-        System.setErr(originalErr);
     }
 
     @Test
@@ -117,6 +99,7 @@ class LernplatzTest {
                 "\t\t\tdurch K12345678 am 24.12.2021 um 02:30\n" +
                 "\t\tStornierung der Reservierung R87654321 am 25.12.2021 um 12:00\n", lernplatz.printProtokoll());
     }
+
     @Test
     void printProtokollImZeitraum() {
         Zeitraum zeitraum = new Zeitraum(LocalDate.of(2021, 10, 1), LocalDate.of(2021, 12, 10));
@@ -124,6 +107,7 @@ class LernplatzTest {
         assertEquals("\tLernplatz 1 fuer 1 Person\n", new Lernplatz(1, 1).printProtokollImZeitraum(zeitraum));
 
     }
+
     @Test
     void invalidCompositionLernzoneInLernplatz() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
@@ -131,6 +115,7 @@ class LernplatzTest {
         assertEquals("ungueltige Verschachtelung: Lernzone kann kein Teil von Lernplatz sein", exception.getMessage());
         assertTrue(lernplatz.getProtokoll().isEmpty());
     }
+
     @Test
     void invalidCompositionLernplatzInLernplatz() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
@@ -138,6 +123,7 @@ class LernplatzTest {
         assertEquals("ungueltige Verschachtelung: Lernplatz kann kein Teil von Lernplatz sein", exception.getMessage());
         assertTrue(lernplatz.getProtokoll().isEmpty());
     }
+
     @Test
     void add() {
         try {

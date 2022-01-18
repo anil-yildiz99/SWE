@@ -48,15 +48,15 @@ class ProtokollWrapperTest {
                 7,
                 new Student("K12345678"));
         bel = new Belegung(res.getReservierungsDatum(), LocalTime.of(9, 21), res, LocalTime.of(9, 21), LocalTime.of(9, 48));
-        stor = new Stornierung(LocalDate.of(2021, 12, 30), LocalTime.of(18, 23),res2);
+        stor = new Stornierung(LocalDate.of(2021, 12, 30), LocalTime.of(18, 23), res2);
     }
 
     @Test
     void printProtokoll() throws InvalidCompositeException {
         Lernzone lz = new Lernzone("Teichwerk-EG-Z04");
         wrapper.add(lz);
-        Lernplatz lp = new Lernplatz(1,5);
-        Lernplatz lp2 = new Lernplatz(2,1);
+        Lernplatz lp = new Lernplatz(1, 5);
+        Lernplatz lp2 = new Lernplatz(2, 1);
         lz.add(lp);
         lz.add(lp2);
         lp.add(res);
@@ -70,10 +70,10 @@ class ProtokollWrapperTest {
                 "\t\tReservierung R86574123 fuer 07.01.2022 von 16:13 bis 18:00 fuer 8 Personen\n" +
                 "\t\t\tdurch K74125863 am 05.01.2022 um 22:11\n" +
                 "\t\tBelegung am 07.01.2022 von 09:21 bis 09:48 mit Reservierung R86574123\n" +
-                "\t\tReservierung R87654321 fuer 29.12.2021 von 22:15 bis 23:55 fuer 7 Personen\n"+
-                "\t\t\tdurch K12345678 am 23.12.2021 um 07:07\n"+
+                "\t\tReservierung R87654321 fuer 29.12.2021 von 22:15 bis 23:55 fuer 7 Personen\n" +
+                "\t\t\tdurch K12345678 am 23.12.2021 um 07:07\n" +
                 "\t\tStornierung der Reservierung R87654321 am 30.12.2021 um 18:23\n" +
-                "\tLernplatz 2 fuer 1 Person\n"+
+                "\tLernplatz 2 fuer 1 Person\n" +
                 "Protokollende", wrapper.printProtokoll());
     }
 
@@ -82,8 +82,8 @@ class ProtokollWrapperTest {
         Zeitraum zeitraum = new Zeitraum(LocalDate.of(2021, 9, 30), LocalDate.of(2021, 12, 31));
         Lernzone lz = new Lernzone("Kepler Hall-EG-Z09");
         wrapper.add(lz);
-        Lernplatz lp = new Lernplatz(4,8);
-        Lernplatz lp2 = new Lernplatz(9,1);
+        Lernplatz lp = new Lernplatz(4, 8);
+        Lernplatz lp2 = new Lernplatz(9, 1);
         lz.add(lp);
         lz.add(lp2);
         lp.add(res);
@@ -94,9 +94,9 @@ class ProtokollWrapperTest {
         assertEquals("Protokoll im Zeitraum von 2021-09-30 bis 2021-12-31\n" +
                 "Lernzone: Kepler Hall-EG-Z09\n" +
                 "\tLernplatz 4 fuer 8 Personen\n" +
-                "\tLernplatz 9 fuer 1 Person\n"+
-                "\t\tReservierung R87654321 fuer 29.12.2021 von 22:15 bis 23:55 fuer 7 Personen\n"+
-                "\t\t\tdurch K12345678 am 23.12.2021 um 07:07\n"+
+                "\tLernplatz 9 fuer 1 Person\n" +
+                "\t\tReservierung R87654321 fuer 29.12.2021 von 22:15 bis 23:55 fuer 7 Personen\n" +
+                "\t\t\tdurch K12345678 am 23.12.2021 um 07:07\n" +
                 "\t\tStornierung der Reservierung R87654321 am 30.12.2021 um 18:23\n" +
                 "Protokollende", wrapper.printProtokollImZeitraum(zeitraum));
     }
@@ -111,22 +111,25 @@ class ProtokollWrapperTest {
         }
         assertEquals(1, wrapper.getProtokoll().size());
     }
+
     @Test
-    void invalidCompositionWrapperInWrapper(){
+    void invalidCompositionWrapperInWrapper() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
                 wrapper.add(new ProtokollWrapper()));
         assertEquals("ungueltige Verschachtelung: ProtokollWrapper kann kein Teil von ProtokollWrapper sein", exception.getMessage());
         assertTrue(wrapper.getProtokoll().isEmpty());
     }
+
     @Test
-    void invalidCompositionLernplatzInWrapper(){
+    void invalidCompositionLernplatzInWrapper() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
-                wrapper.add(new Lernplatz(5,7)));
+                wrapper.add(new Lernplatz(5, 7)));
         assertEquals("ungueltige Verschachtelung: Lernplatz kann kein Teil von ProtokollWrapper sein", exception.getMessage());
         assertTrue(wrapper.getProtokoll().isEmpty());
     }
+
     @Test
-    void invalidCompositionReservierungInWrapper(){
+    void invalidCompositionReservierungInWrapper() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
                 wrapper.add(new Reservierung(
                         LocalDate.of(2021, 1, 15),
@@ -140,8 +143,9 @@ class ProtokollWrapperTest {
         assertEquals("ungueltige Verschachtelung: Reservierung kann kein Teil von ProtokollWrapper sein", exception.getMessage());
         assertTrue(wrapper.getProtokoll().isEmpty());
     }
+
     @Test
-    void invalidCompositionBelegungInLernzone(){
+    void invalidCompositionBelegungInLernzone() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
                 wrapper.add(new Belegung(
                         res.getReservierungsDatum(),
@@ -152,8 +156,9 @@ class ProtokollWrapperTest {
         assertEquals("ungueltige Verschachtelung: Belegung kann kein Teil von ProtokollWrapper sein", exception.getMessage());
         assertTrue(wrapper.getProtokoll().isEmpty());
     }
+
     @Test
-    void invalidCompositionStornierungInLernzone(){
+    void invalidCompositionStornierungInLernzone() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
                 wrapper.add(new Stornierung(
                         LocalDate.of(2022, 1, 8),
