@@ -34,7 +34,7 @@ class AktionTest {
 	void testPrintProtokollImZeitraum() {
 		// Zunächst wird die "printProtokollImZeitraum" Methode bei einer Reservierung getestet
 		text = "\t\tReservierung R08154711 fuer 06.12.2021 von 09:15 bis 10:00 fuer 1 Person\n" +
-                "\t\t\tdurch K12345679 am 01.12.2021 um 23:18" + System.lineSeparator();
+                "\t\t\tdurch K12345679 am 01.12.2021 um 23:18\n";
 		try {
 			aktion = new Reservierung(LocalDate.of(2021, 12, 1), LocalTime.of(23, 18),
 			        "R08154711", LocalDate.of(2021, 12, 6),
@@ -50,7 +50,7 @@ class AktionTest {
 		
 		
 		// Als nächstes wird die "printProtokollImZeitraum" Methode bei einer Belegung getestet
-		text = "\t\tBelegung am 06.12.2021 von 09:21 bis 09:48 mit Reservierung R08154711" + System.lineSeparator();
+		text = "\t\tBelegung am 06.12.2021 von 09:21 bis 09:48 mit Reservierung R08154711\n";
 		try {
 			Reservierung reservierung = new Reservierung(LocalDate.of(2021, 12, 1), LocalTime.of(23, 18),
 			        "R08154711", LocalDate.of(2021, 12, 6),
@@ -65,7 +65,7 @@ class AktionTest {
 		
 		
 		// Als letztes wird die "printProtokollImZeitraum" Methode bei einer Stornierung getestet
-		text = "\t\tStornierung der Reservierung R08154711 am 05.12.2021 um 18:23" + System.lineSeparator();
+		text = "\t\tStornierung der Reservierung R08154711 am 05.12.2021 um 18:23\n";
 		try {
 			Reservierung reservierung = new Reservierung(LocalDate.of(2021, 12, 1), LocalTime.of(23, 18),
 			        "R08154711", LocalDate.of(2021, 12, 6),

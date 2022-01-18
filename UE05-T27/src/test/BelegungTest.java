@@ -15,7 +15,7 @@ class BelegungTest extends LeafPrintProtkollTest {
 	
 	@BeforeEach
 	void initTest() {
-		text = "\t\tBelegung am 06.12.2021 von 09:21 bis 09:48 mit Reservierung R08154711" + System.lineSeparator();
+		text = "\t\tBelegung am 06.12.2021 von 09:21 bis 09:48 mit Reservierung R08154711\n";
 		
 		try {
 			Reservierung reservierung = new Reservierung(LocalDate.of(2021, 12, 1), LocalTime.of(23, 18),
