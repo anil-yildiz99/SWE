@@ -65,6 +65,13 @@ class LernzoneTest {
         assertNotEquals("S4-EG-Z01", lernzone.getName());
     }
 
+    /**
+     * Dieser Test testet die Methode printProtokoll() der Klasse Lernzone. Dabei werden der Lernzone 2 Lernplätze hinzugefügt.
+     * Anschließend werden einem dieser Lernplätzen 2 Reservierungen, eine Belegung und eine Stornierung hinzugefügt.
+     * Nach jeder Hinzufügung einer Komponente wird anschließend die printProtokoll()-Methode aufgerufen und überprüft,
+     * ob der zurückgegebene String, der erwarteten Ausgabe entspricht.
+     * @throws InvalidCompositeException
+     */
     @Test
     void printProtokoll() throws InvalidCompositeException {
         assertEquals("Lernzone: S3-EG-Z01\n", lernzone.printProtokoll());
@@ -104,7 +111,13 @@ class LernzoneTest {
                 "\t\tStornierung der Reservierung R87654321 am 30.12.2021 um 18:23\n" +
                 "\tLernplatz 2 fuer 1 Person\n", lernzone.printProtokoll());
     }
-
+    /**
+     * Dieser Test testet die Methode printProtokollImZeitraum(Zeitraum zeitraum) der Klasse Lernzone. Dabei wird der Lernzone ein Lernplatz hinzugefügt.
+     * Anschließend werden diesem Lernplatz eine Reservierung und eine Stornierung hinzugefügt.
+     * Nach jeder Hinzufügung einer Komponente wird anschließend die printProtokollImZeitraum(Zeitraum zeitraum)-Methode aufgerufen und überprüft,
+     * ob der zurückgegebene String, der erwarteten Ausgabe entspricht.
+     * @throws InvalidCompositeException
+     */
     @Test
     void printProtokollImZeitraum() throws InvalidCompositeException, ZeitraumException {
         Zeitraum zeitraum = new Zeitraum(LocalDate.of(2021, 11, 30), LocalDate.of(2021, 12, 29));
@@ -125,7 +138,12 @@ class LernzoneTest {
                 "\t\tReservierung R87654321 fuer 29.12.2021 von 22:15 bis 23:55 fuer 7 Personen\n" +
                 "\t\t\tdurch K12345678 am 22.12.2021 um 01:01\n", lernzone.printProtokollImZeitraum(zeitraum));
     }
-
+    /**
+     * Dieser Test testet die add(Component comp) Methode der Klasse Lernzone, dabei wird überprüft, ob das hinzufügen
+     * einer gültigen Komponente erfolgreich ist. Führt das Hinzufügen der Komponete zu keiner Exception, wird überprüft,
+     * ob diese in der Komponenten-Collection der Klasse hinzugefügt wurde, sprich ob die size() Methode einen erwarteten Wert
+     * zurückliefert.
+     */
     @Test
     void add() {
         assertTrue(lernzone.getProtokoll().isEmpty());
@@ -136,7 +154,10 @@ class LernzoneTest {
         }
         assertEquals(1, lernzone.getProtokoll().size());
     }
-
+    /**
+     * Dieser Test testet ob das Hinzufügen einer Lernzone in eine Lernzone eine erwartete Exception mit entsprechender
+     * Nachricht liefert.
+     */
     @Test
     void invalidCompositionLernzoneInLernzone() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
@@ -144,7 +165,10 @@ class LernzoneTest {
         assertEquals("ungueltige Verschachtelung: Lernzone kann kein Teil von Lernzone sein", exception.getMessage());
         assertTrue(lernzone.getProtokoll().isEmpty());
     }
-
+    /**
+     * Dieser Test testet ob das Hinzufügen einer Reservierung in eine Lernzone eine erwartete Exception mit entsprechender
+     * Nachricht liefert.
+     */
     @Test
     void invalidCompositionReservierungInLernzone() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
@@ -161,6 +185,10 @@ class LernzoneTest {
         assertTrue(lernzone.getProtokoll().isEmpty());
     }
 
+    /**
+     * Dieser Test testet ob das Hinzufügen einer Belegung in eine Lernzone eine erwartete Exception mit entsprechender
+     * Nachricht liefert.
+     */
     @Test
     void invalidCompositionBelegungInLernzone() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
@@ -174,6 +202,10 @@ class LernzoneTest {
         assertTrue(lernzone.getProtokoll().isEmpty());
     }
 
+    /**
+     * Dieser Test testet ob das Hinzufügen einer Stornierung in eine Lernzone eine erwartete Exception mit entsprechender
+     * Nachricht liefert.
+     */
     @Test
     void invalidCompositionStornierungInLernzone() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
@@ -184,6 +216,10 @@ class LernzoneTest {
         assertEquals("ungueltige Verschachtelung: Stornierung kann kein Teil von Lernzone sein", exception.getMessage());
         assertTrue(lernzone.getProtokoll().isEmpty());
     }
+    /**
+     * Dieser Test testet ob das Hinzufügen eines Wrappers in eine Lernzone eine erwartete Exception mit entsprechender
+     * Nachricht liefert.
+     */
     @Test
     void invalidCompositionWrapperInLernzone() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
