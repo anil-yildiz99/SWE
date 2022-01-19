@@ -22,18 +22,5 @@ class StudentTest {
         assertThrows(StudentException.class, () -> new Student("k12345a78"));
         assertThrows(StudentException.class, () -> new Student(null));
     }
-
-    @Test
-    void testGetMatrikelnummer() {
-        assertEquals("k12345678", student.getMatrikelnummer());
-
-        try {
-            student = new Student("k87654321");
-        } catch (StudentException e) {
-        	e.printStackTrace();
-        }
-        assertEquals("k87654321", student.getMatrikelnummer());
-        assertNotEquals("K87654321", student.getMatrikelnummer());
-    }
-
+    
 }

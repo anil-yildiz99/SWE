@@ -76,6 +76,7 @@ class ReservierungTest extends LeafPrintProtkollTest {
 	
 	@Test
 	void testSetVon() {
+		// Zunaechst wird die ordnungsgemaesse Zuordnung eines Werts in die Variable "von" getestet
 		assertDoesNotThrow(() -> ((Reservierung) aktion1).setVon(LocalTime.of(8, 45)));
 		assertThrows(ZeitraumException.class, () -> ((Reservierung) aktion1).setVon(null));
 		assertThrows(ZeitraumException.class, () -> ((Reservierung) aktion1).setVon(LocalTime.of(12, 30)));
@@ -83,6 +84,7 @@ class ReservierungTest extends LeafPrintProtkollTest {
 	
 	@Test
 	void testSetBis() {
+		// Zunaechst wird die ordnungsgemaesse Zuordnung eines Werts in die Variable "bis" getestet
 		assertDoesNotThrow(() -> ((Reservierung) aktion1).setBis(LocalTime.of(10, 33)));
 		assertThrows(ZeitraumException.class, () -> ((Reservierung) aktion1).setBis(null));
 		assertThrows(ZeitraumException.class, () -> ((Reservierung) aktion1).setBis(LocalTime.of(8, 10)));

@@ -91,7 +91,7 @@ class BelegungTest extends LeafPrintProtkollTest {
 	
 	@Test
 	void testSetBis() {
-		// Zunaechst wird die ordnungsgemaesse Zuordnung eines Werts in die Variable "von" getestet
+		// Zunaechst wird die ordnungsgemaesse Zuordnung eines Werts in die Variable "bis" getestet
 		assertDoesNotThrow(() -> ((Belegung) aktion1).setBis(LocalTime.of(9, 50)));
 		assertThrows(ZeitraumException.class, () -> ((Belegung) aktion1).setBis(null));
 		
