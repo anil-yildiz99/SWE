@@ -123,6 +123,13 @@ class LernplatzTest {
         assertEquals("ungueltige Verschachtelung: Lernplatz kann kein Teil von Lernplatz sein", exception.getMessage());
         assertTrue(lernplatz.getProtokoll().isEmpty());
     }
+    @Test
+    void invalidCompositionWrapperInLernplatz() {
+        Exception exception = assertThrows(InvalidCompositeException.class, () ->
+                lernplatz.add(new ProtokollWrapper()));
+        assertEquals("ungueltige Verschachtelung: ProtokollWrapper kann kein Teil von Lernplatz sein", exception.getMessage());
+        assertTrue(lernplatz.getProtokoll().isEmpty());
+    }
 
     @Test
     void add() {
