@@ -1,4 +1,5 @@
 import model.*;
+import model.exceptions.AktionException;
 import model.exceptions.StudentException;
 import model.exceptions.ZeitraumException;
 
@@ -11,7 +12,7 @@ import java.time.LocalTime;
  */
 public class PlatzFuerTeams {
 
-    public static void main(String[] args) throws StudentException, ZeitraumException {
+    public static void main(String[] args) throws StudentException, ZeitraumException, AktionException {
         ProtokollWrapper wrapper = new ProtokollWrapper();
 
         Zeitraum zeitraum = null;

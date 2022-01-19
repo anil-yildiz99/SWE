@@ -3,6 +3,7 @@ package test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import model.*;
+import model.exceptions.AktionException;
 import model.exceptions.InvalidCompositeException;
 import model.exceptions.StudentException;
 import model.exceptions.ZeitraumException;
@@ -22,7 +23,7 @@ class LernzoneTest {
     private Stornierung stor;
 
     @BeforeAll
-    void initActions() throws StudentException, ZeitraumException {
+    void initActions() throws StudentException, ZeitraumException, AktionException {
         res = new Reservierung(
                 LocalDate.of(2021, 12, 1),
                 LocalTime.of(23, 18),

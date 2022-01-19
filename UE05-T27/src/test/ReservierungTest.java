@@ -1,14 +1,12 @@
 package test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
+import java.time.format.DateTimeFormatter;
 
 import model.Reservierung;
 import model.Student;
@@ -18,19 +16,13 @@ import model.exceptions.ZeitraumException;
 class ReservierungTest extends LeafPrintProtkollTest {
 
 	@BeforeEach
-	void initTest() {
+	void initTest() throws ZeitraumException, StudentException {
 		text = "\t\tReservierung R08154711 fuer 06.12.2021 von 09:15 bis 10:00 fuer 1 Person\n" +
 				"\t\t\tdurch K12345679 am 01.12.2021 um 23:18\n";
 
-		try {
-			aktion = new Reservierung(LocalDate.of(2021, 12, 1), LocalTime.of(23, 18),
-					"R08154711", LocalDate.of(2021, 12, 6),
-					LocalTime.of(9, 15), LocalTime.of(10, 0), 1, new Student("K12345679"));
-		} catch (StudentException e) {
-			e.printStackTrace();
-		} catch (ZeitraumException e) {
-			e.printStackTrace();
-		}
+		aktion = new Reservierung(LocalDate.of(2021, 12, 1), LocalTime.of(23, 18),
+				"R08154711", LocalDate.of(2021, 12, 6),
+				LocalTime.of(9, 15), LocalTime.of(10, 0), 1, new Student("K12345679"));
 	}
 	
 	@Test
@@ -56,6 +48,23 @@ class ReservierungTest extends LeafPrintProtkollTest {
 		assertThrows(ZeitraumException.class, () -> new Reservierung(LocalDate.of(2021, 11, 30), LocalTime.of(23, 18),
 		        "R08154711", LocalDate.of(2021, 12, 6),
 		        LocalTime.of(12, 30), LocalTime.of(10, 0), 1, new Student("K12345679")));
+		
+		// Dieselben asserts muessen auch fuer den zweiten Konstruktor erfolgen
+		assertThrows(ZeitraumException.class, () -> new Reservierung(LocalDate.of(2021, 11, 30), LocalTime.of(23, 18), DateTimeFormatter.ofPattern("yyyy.MM.dd"),
+		        "R08154711", null,
+		        LocalTime.of(9, 15), LocalTime.of(10, 0), 1, new Student("K12345679")));
+		assertThrows(ZeitraumException.class, () -> new Reservierung(LocalDate.of(2021, 11, 30), LocalTime.of(23, 18), DateTimeFormatter.ofPattern("yyyy.MM.dd"),
+		        "R08154711", LocalDate.of(2021, 11, 10),
+		        LocalTime.of(9, 15), LocalTime.of(10, 0), 1, new Student("K12345679")));
+		assertThrows(ZeitraumException.class, () -> new Reservierung(LocalDate.of(2021, 11, 30), LocalTime.of(23, 18), DateTimeFormatter.ofPattern("yyyy.MM.dd"),
+		        "R08154711", LocalDate.of(2021, 12, 6),
+		        null, LocalTime.of(10, 0), 1, new Student("K12345679")));
+		assertThrows(ZeitraumException.class, () -> new Reservierung(LocalDate.of(2021, 11, 30), LocalTime.of(23, 18), DateTimeFormatter.ofPattern("yyyy.MM.dd"),
+		        "R08154711", LocalDate.of(2021, 12, 6),
+		        LocalTime.of(9, 15), null, 1, new Student("K12345679")));
+		assertThrows(ZeitraumException.class, () -> new Reservierung(LocalDate.of(2021, 11, 30), LocalTime.of(23, 18), DateTimeFormatter.ofPattern("yyyy.MM.dd"),
+		        "R08154711", LocalDate.of(2021, 12, 6),
+		        LocalTime.of(12, 30), LocalTime.of(10, 0), 1, new Student("K12345679")));
 	}
 	
 	@Test
@@ -79,6 +88,8 @@ class ReservierungTest extends LeafPrintProtkollTest {
 		assertEquals(1, ((Reservierung) aktion).getPersonenAnzahl());
 		((Reservierung) aktion).setPersonenAnzahl(0);
 		assertEquals(1, ((Reservierung) aktion).getPersonenAnzahl());
+		((Reservierung) aktion).setPersonenAnzahl(2);
+		assertEquals(2, ((Reservierung) aktion).getPersonenAnzahl());
 	}
 
 }

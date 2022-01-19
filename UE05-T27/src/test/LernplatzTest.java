@@ -1,6 +1,7 @@
 package test;
 
 import model.*;
+import model.exceptions.AktionException;
 import model.exceptions.InvalidCompositeException;
 import model.exceptions.StudentException;
 import model.exceptions.ZeitraumException;
@@ -22,7 +23,7 @@ class LernplatzTest {
     private Stornierung stor;
 
     @BeforeAll
-    public void initActions() throws StudentException, ZeitraumException {
+    public void initActions() throws StudentException, ZeitraumException, AktionException {
         res = new Reservierung(
                 LocalDate.of(2021, 11, 1),
                 LocalTime.of(15, 20),
@@ -36,7 +37,7 @@ class LernplatzTest {
                 LocalDate.of(2021, 12, 24),
                 LocalTime.of(2, 30),
                 "R87654321",
-                LocalDate.of(2021, 1, 3),
+                LocalDate.of(2022, 1, 3),
                 LocalTime.of(11, 10),
                 LocalTime.of(14, 21),
                 6,
@@ -95,7 +96,7 @@ class LernplatzTest {
                 "\t\tReservierung R12345678 fuer 01.11.2021 von 16:25 bis 18:30 fuer 3 Personen\n" +
                 "\t\t\tdurch K12345678 am 01.11.2021 um 15:20\n" +
                 "\t\tBelegung am 01.11.2021 von 16:25 bis 17:30 mit Reservierung R12345678\n" +
-                "\t\tReservierung R87654321 fuer 03.01.2021 von 11:10 bis 14:21 fuer 6 Personen\n" +
+                "\t\tReservierung R87654321 fuer 03.01.2022 von 11:10 bis 14:21 fuer 6 Personen\n" +
                 "\t\t\tdurch K12345678 am 24.12.2021 um 02:30\n" +
                 "\t\tStornierung der Reservierung R87654321 am 25.12.2021 um 12:00\n", lernplatz.printProtokoll());
     }

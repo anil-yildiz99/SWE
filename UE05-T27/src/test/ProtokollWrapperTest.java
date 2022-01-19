@@ -1,6 +1,7 @@
 package test;
 
 import model.*;
+import model.exceptions.AktionException;
 import model.exceptions.InvalidCompositeException;
 import model.exceptions.StudentException;
 import model.exceptions.ZeitraumException;
@@ -30,7 +31,7 @@ class ProtokollWrapperTest {
     }
 
     @BeforeAll
-    void initAktionen() throws StudentException, ZeitraumException {
+    void initAktionen() throws StudentException, ZeitraumException, AktionException {
         res = new Reservierung(
                 LocalDate.of(2022, 1, 5),
                 LocalTime.of(22, 11),
@@ -49,7 +50,7 @@ class ProtokollWrapperTest {
                 LocalTime.of(23, 55),
                 7,
                 new Student("K12345678"));
-        bel = new Belegung(res.getReservierungsDatum(), LocalTime.of(9, 21), res, LocalTime.of(9, 21), LocalTime.of(9, 48));
+        bel = new Belegung(res.getReservierungsDatum(), LocalTime.of(9, 21), res, LocalTime.of(16, 32), LocalTime.of(17, 44));
         stor = new Stornierung(LocalDate.of(2021, 12, 30), LocalTime.of(18, 23), res2);
     }
 
@@ -71,7 +72,7 @@ class ProtokollWrapperTest {
                 "\tLernplatz 1 fuer 5 Personen\n" +
                 "\t\tReservierung R86574123 fuer 07.01.2022 von 16:13 bis 18:00 fuer 8 Personen\n" +
                 "\t\t\tdurch K74125863 am 05.01.2022 um 22:11\n" +
-                "\t\tBelegung am 07.01.2022 von 09:21 bis 09:48 mit Reservierung R86574123\n" +
+                "\t\tBelegung am 07.01.2022 von 16:32 bis 17:44 mit Reservierung R86574123\n" +
                 "\t\tReservierung R87654321 fuer 29.12.2021 von 22:15 bis 23:55 fuer 7 Personen\n" +
                 "\t\t\tdurch K12345678 am 23.12.2021 um 07:07\n" +
                 "\t\tStornierung der Reservierung R87654321 am 30.12.2021 um 18:23\n" +

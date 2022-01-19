@@ -1,6 +1,7 @@
 package test;
 
 import model.*;
+import model.exceptions.AktionException;
 import model.exceptions.InvalidCompositeException;
 import model.exceptions.StudentException;
 import model.exceptions.ZeitraumException;
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProtokollCompositeTest {
 
     @Test
-    void deleteTest() throws StudentException, InvalidCompositeException, ZeitraumException {
+    void deleteTest() throws StudentException, InvalidCompositeException, ZeitraumException, AktionException {
         Lernzone lz = new Lernzone("Learning Center-EG-Z01");
         Lernplatz lp = new Lernplatz(6, 8);
         Reservierung res = new Reservierung(

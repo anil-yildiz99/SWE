@@ -1,14 +1,11 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import model.Aktion;
 import model.Belegung;
@@ -16,6 +13,7 @@ import model.Reservierung;
 import model.Stornierung;
 import model.Student;
 import model.Zeitraum;
+import model.exceptions.AktionException;
 import model.exceptions.StudentException;
 import model.exceptions.ZeitraumException;
 
@@ -41,18 +39,10 @@ class AktionTest {
 	
 	/**
 	 * Die Initialisierung von der Variable "aktion" wird nicht in der "initTest()" Methode
-	 * eingefuegt, da dies nur fuer die folgenden drei Testmethoden gebraucht wird
+	 * eingefuegt, da dies nur fuer die folgenden zwei Testmethoden gebraucht wird.
 	 * @throws ZeitraumException
 	 * @throws StudentException
 	 */
-	@Test
-	void testSetAktionsDatum() throws ZeitraumException, StudentException {
-		aktion = new Reservierung(LocalDate.of(2021, 11, 30), LocalTime.of(23, 18),
-		        "R08154711", LocalDate.of(2021, 12, 6),
-		        LocalTime.of(9, 15), LocalTime.of(10, 0), 1, new Student("K12345679"));
-		assertThrows(ZeitraumException.class, () -> aktion.setAktionsDatum(null));
-	}
-	
 	@Test
 	void testSetAktionsZeitpunkt() throws ZeitraumException, StudentException {
 		aktion = new Reservierung(LocalDate.of(2021, 11, 30), LocalTime.of(23, 18),
@@ -83,9 +73,10 @@ class AktionTest {
 	 * Hier wird die Ausgabe von der "printProtokollImZeitraum(Zeitraum zeitraum)" Methode mit dem in der Variable "text" 
 	 * zugewiesenem Wert verglichen. Dabei testet diese Methode alle drei Aktionen (Reservierung, Belegung, Stornierung).
 	 * @throws ZeitraumException 
+	 * @throws AktionException 
 	 */
 	@Test
-	void testPrintProtokollImZeitraum() throws ZeitraumException {
+	void testPrintProtokollImZeitraum() throws ZeitraumException, AktionException {
 		// Zunächst wird die "printProtokollImZeitraum" Methode bei einer Reservierung getestet
 		text = "\t\tReservierung R08154711 fuer 06.12.2021 von 09:15 bis 10:00 fuer 1 Person\n" +
                 "\t\t\tdurch K12345679 am 01.12.2021 um 23:18\n";

@@ -40,13 +40,6 @@ public abstract class Aktion extends Component {
         return aktionsDatum;
     }
 
-    public void setAktionsDatum(LocalDate aktionsDatum) throws ZeitraumException {
-    	if (aktionsDatum == null)
-    		throw new ZeitraumException("Das Datum der durchgefuehrten Aktion ist ungueltig!");
-    	
-        this.aktionsDatum = aktionsDatum;
-    }
-
     public LocalTime getAktionsZeitpunkt() {
         return aktionsZeitpunkt;
     }
