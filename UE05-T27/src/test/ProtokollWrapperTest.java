@@ -148,7 +148,7 @@ class ProtokollWrapperTest {
     }
 
     @Test
-    void invalidCompositionBelegungInLernzone() {
+    void invalidCompositionBelegungInWrapper() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
                 wrapper.add(new Belegung(
                         res.getReservierungsDatum(),
@@ -161,7 +161,7 @@ class ProtokollWrapperTest {
     }
 
     @Test
-    void invalidCompositionStornierungInLernzone() {
+    void invalidCompositionStornierungInWrapper() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
                 wrapper.add(new Stornierung(
                         LocalDate.of(2022, 1, 8),

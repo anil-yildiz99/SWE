@@ -10,6 +10,7 @@ kann. Außerdem muss für Exception-Unit-Tests nicht der Ausgabestream abgefragt
 vermieden werden.
 Als nächstes wurde eine Exception "StudentException" hinzugefügt. Diese Exception wird bei der Initialisierung einer Studenteninstanz geworfen, wenn die Matrikelnummer des Studenten ungültig ist.
 Eine weitere Exception, die hinzugefügt wurde, ist "ZeitraumException". Diese Exception wird geworfen, wenn ein Datum ungültig ist (z.B.: Null, oder ein Reservierungsdatum ist vor der Tätigung dieses Datums) oder wenn zeitliche Angaben ungültig sind (z.B.: Die Uhrzeit "von" tritt nach der Uhrzeit "bis" auf)
+Die nächste Exception, die hinzugefügt wurde, ist "AktionException". Diese Exception wird geworfen, wenn beim Konstruktor einer konkreten Leaf Klasse (Reservierung, Belegung, Sotrnierung) bei einer Aktion "null" übergeben wird. Ein Beispiel wäre folgendes: Es wird eine neue Stornierung instanziiert, jedoch wird dieser Stornierung keine Reservierung zugeordnet.
 
 Protokoll-Wrapper-Komposition:
 In der Vorversion wäre es theoretisch möglich gewesen, einem Protokollwrapper andere Komponenten ohne Einschränkung hinzuzufügen.
@@ -17,4 +18,7 @@ Jetzt darf der Wrapper nur noch Lernzonen enthalten.
 
 Leaf-Klassen:
 Zu den konkreten Leaf-Klassen (Reservierung, Belegung, Sotrnierung) wurde jeweils ein weiterer Konstruktor hinzugefügt, welche zusätzlich noch das Feld "datumsFormatierer" initialisiert.
+
+Setter:
+Die einzelnen Setter von den Klassen wurden überarbeitet. Hier wurden Bedingungen hinzugefügt und es werden gegebenfalls Exceptions geworfen.
 

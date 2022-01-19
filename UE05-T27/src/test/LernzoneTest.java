@@ -184,4 +184,11 @@ class LernzoneTest {
         assertEquals("ungueltige Verschachtelung: Stornierung kann kein Teil von Lernzone sein", exception.getMessage());
         assertTrue(lernzone.getProtokoll().isEmpty());
     }
+    @Test
+    void invalidCompositionWrapperInLernzone() {
+        Exception exception = assertThrows(InvalidCompositeException.class, () ->
+                lernzone.add(new ProtokollWrapper()));
+        assertEquals("ungueltige Verschachtelung: ProtokollWrapper kann kein Teil von Lernzone sein", exception.getMessage());
+        assertTrue(lernzone.getProtokoll().isEmpty());
+    }
 }
