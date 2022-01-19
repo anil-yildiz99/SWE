@@ -22,3 +22,6 @@ Zu den konkreten Leaf-Klassen (Reservierung, Belegung, Sotrnierung) wurde jeweil
 Setter:
 Die einzelnen Setter von den Klassen wurden überarbeitet. Hier wurden Bedingungen hinzugefügt und es werden gegebenfalls Exceptions geworfen.
 
+Einführung der getProtokoll()-Methode
+Bei Implementation der Unit-Tests wurde ersichtlich, dass keine get-Methode zur Abfrage der Kind-Komponenten einer Komponente eingeführt wurde, diese aber zur Testung essenziell ist. Dementsprechend wurde der ProtokollComposite-Klasse eine entsprechende get-Methode mit dem Rückgabeparamert List<Component> hinzugefügt.
+
