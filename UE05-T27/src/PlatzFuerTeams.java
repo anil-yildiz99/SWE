@@ -28,8 +28,8 @@ public class PlatzFuerTeams {
         Reservierung rs1 = new Reservierung(LocalDate.of(2021, 12, 1), LocalTime.of(23, 18),
                 "R08154711", LocalDate.of(2021, 12, 3),
                 LocalTime.of(9, 15), LocalTime.of(10, 0), 3, new Student("K12345678"));
-        Reservierung rs2 = new Reservierung(LocalDate.of(2021, 12, 1), LocalTime.of(23, 18),
-                "R08154711", LocalDate.of(2021, 12, 6),
+        Reservierung rs2 = new Reservierung(LocalDate.of(2021, 12, 1), LocalTime.of(23, 40),
+                "R87456321", LocalDate.of(2021, 12, 6),
                 LocalTime.of(9, 15), LocalTime.of(10, 0), 1, new Student("K12345679"));
         Belegung belegung1 = new Belegung(rs1.getReservierungsDatum(), LocalTime.of(9, 21), rs1, LocalTime.of(9, 21), LocalTime.of(9, 48));
         Stornierung stornierung1 = new Stornierung(LocalDate.of(2021, 12, 5), LocalTime.of(18, 23),rs2);
