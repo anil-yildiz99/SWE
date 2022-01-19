@@ -13,11 +13,20 @@ import model.Aktion;
  *
  */
 abstract class LeafPrintProtkollTest {
-	protected String text;
-	protected Aktion aktion;
+	protected String text1;
+	protected String text2;
 	
+	protected Aktion aktion1;
+	protected Aktion aktion2;
+	
+	/**
+	 * Folgendes wird hier ausgefuehrt: Zuerst wird die Methode "printProtokoll()" ohne einem
+	 * DateTimeFormatter getestet (also aktion1 und text1) und danach mit einem DateTimeFormatter
+	 * (also aktion2 und text2).
+	 */
 	@Test
 	void testPrintProtokoll() {
-		assertEquals(text, aktion.printProtokoll());
+		assertEquals(text1, aktion1.printProtokoll());
+		assertEquals(text2, aktion2.printProtokoll());
 	}
 }

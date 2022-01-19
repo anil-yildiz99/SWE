@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+import java.time.format.DateTimeFormatter;
 
 import model.Aktion;
 import model.Belegung;
@@ -49,6 +49,9 @@ class AktionTest {
 		        "R08154711", LocalDate.of(2021, 12, 6),
 		        LocalTime.of(9, 15), LocalTime.of(10, 0), 1, new Student("K12345679"));
 		assertThrows(ZeitraumException.class, () -> aktion.setAktionsZeitpunkt(null));
+		
+		aktion.setAktionsZeitpunkt(LocalTime.of(23, 0));
+		assertEquals(LocalTime.of(23, 0), aktion.getAktionsZeitpunkt());	// Der getter ist hier notwendig, um den Setter ueberpruefen zu koennen
 	}
 	
 	/**
@@ -64,9 +67,13 @@ class AktionTest {
 		        LocalTime.of(9, 15), LocalTime.of(10, 0), 1, new Student("K12345679"));
 		
 		assertNotEquals(null, aktion.getDatumsFormatierer());
-		
 		aktion.setDatumsFormatierer(null);
 		assertNotEquals(null, aktion.getDatumsFormatierer());
+		
+		aktion.setDatumsFormatierer(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		// Da ein Vergleich von DateTimeFormatter nicht moeglich ist, wird dies in ein String umgewandelt
+		// und folglich werden die Strings miteinander verglichen.
+		assertEquals(DateTimeFormatter.ofPattern("yyyy-MM-dd").toString(), aktion.getDatumsFormatierer().toString());
 	}
 
 	/**

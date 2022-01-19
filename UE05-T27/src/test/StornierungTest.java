@@ -19,12 +19,17 @@ class StornierungTest extends LeafPrintProtkollTest {
 	
     @BeforeEach
     void initTest() throws AktionException, ZeitraumException, StudentException {
-        text = "\t\tStornierung der Reservierung R08154711 am 05.12.2021 um 18:23\n";
+        text1 = "\t\tStornierung der Reservierung R08154711 am 05.12.2021 um 18:23\n";
 
         reservierung = new Reservierung(LocalDate.of(2021, 12, 1), LocalTime.of(23, 18),
         		"R08154711", LocalDate.of(2021, 12, 6),
         		LocalTime.of(9, 15), LocalTime.of(10, 0), 1, new Student("K12345679"));
-        aktion = new Stornierung(LocalDate.of(2021, 12, 5), LocalTime.of(18, 23), reservierung);
+        
+        aktion1 = new Stornierung(LocalDate.of(2021, 12, 5), LocalTime.of(18, 23), reservierung);
+        
+        text2 = "\t\tStornierung der Reservierung R08154711 am 2021-12-05 um 18:23\n";
+        
+        aktion2 = new Stornierung(LocalDate.of(2021, 12, 5), LocalTime.of(18, 23), DateTimeFormatter.ofPattern("yyyy-MM-dd"), reservierung);
     }
     
     /**

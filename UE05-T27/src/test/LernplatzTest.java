@@ -52,19 +52,9 @@ class LernplatzTest {
     }
 
     @Test
-    void getNummer() {
-        assertEquals(5, 5);
-    }
-
-    @Test
     void setNummer() {
         lernplatz.setNummer(2);
         assertEquals(2, lernplatz.getNummer());
-    }
-
-    @Test
-    void getKapazitaet() {
-        assertEquals(6, 6);
     }
 
     @Test

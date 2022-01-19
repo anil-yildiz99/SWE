@@ -21,12 +21,15 @@ class BelegungTest extends LeafPrintProtkollTest {
 	
 	@BeforeEach
 	void initTest() throws AktionException, ZeitraumException, StudentException {
-		text = "\t\tBelegung am 06.12.2021 von 09:21 bis 09:48 mit Reservierung R08154711\n";
+		text1 = "\t\tBelegung am 06.12.2021 von 09:21 bis 09:48 mit Reservierung R08154711\n";
 		
 		reservierung = new Reservierung(LocalDate.of(2021, 12, 1), LocalTime.of(23, 18),
 				"R08154711", LocalDate.of(2021, 12, 6),
 				LocalTime.of(9, 15), LocalTime.of(10, 0), 1, new Student("K12345679"));
-		aktion = new Belegung(reservierung.getReservierungsDatum(), LocalTime.of(9, 21), reservierung, LocalTime.of(9, 21), LocalTime.of(9, 48));
+		aktion1 = new Belegung(reservierung.getReservierungsDatum(), LocalTime.of(9, 21), reservierung, LocalTime.of(9, 21), LocalTime.of(9, 48));
+		
+		text2 = "\t\tBelegung am 2021-12-06 von 09:21 bis 09:48 mit Reservierung R08154711\n";
+		aktion2 = new Belegung(reservierung.getReservierungsDatum(), LocalTime.of(9, 21), DateTimeFormatter.ofPattern("yyyy-MM-dd"), reservierung, LocalTime.of(9, 21), LocalTime.of(9, 48));
 	}
 	
 	@Test
@@ -59,29 +62,44 @@ class BelegungTest extends LeafPrintProtkollTest {
 	
 	@Test
 	void testSetReservierung() {
-		assertThrows(AktionException.class, () -> ((Belegung) aktion).setReservierung(null));
+		assertDoesNotThrow(() -> ((Belegung) aktion1).setReservierung(new Reservierung(LocalDate.of(2021, 11, 30), LocalTime.of(23, 10),
+				"R08154711", LocalDate.of(2021, 12, 3),
+				LocalTime.of(10, 15), LocalTime.of(14, 30), 2, new Student("K12345679"))));
+		assertThrows(AktionException.class, () -> ((Belegung) aktion1).setReservierung(null));
+	}
+	
+	/**
+	 * Fuer eine 100%ige Coverage ist das Testen dieses Setters notwendig
+	 */
+	@Test
+	void testGetReservierung() {
+		assertNotNull(((Belegung) aktion1).getReservierung());
 	}
 	
 	@Test
 	void testSetVon() {
-		assertThrows(ZeitraumException.class, () -> ((Belegung) aktion).setVon(null));
+		// Zunaechst wird die ordnungsgemaesse Zuordnung eines Werts in die Variable "von" getestet
+		assertDoesNotThrow(() -> ((Belegung) aktion1).setVon(LocalTime.of(9, 30)));
+		assertThrows(ZeitraumException.class, () -> ((Belegung) aktion1).setVon(null));
 		
 		// Im folgenden assert wird der Belegungszeitpunkt "von" nach dem Belegungszeitpunkt "bis" gesetzt
-		assertThrows(ZeitraumException.class, () -> ((Belegung) aktion).setVon(LocalTime.of(9, 55)));
+		assertThrows(ZeitraumException.class, () -> ((Belegung) aktion1).setVon(LocalTime.of(9, 55)));
 		
 		// Als naechstes wird der Belegungszeitpunkt "von" vor dem Reservierungszeitpunkt "von" gesetzt
-		assertThrows(ZeitraumException.class, () -> ((Belegung) aktion).setVon(LocalTime.of(8, 30)));
+		assertThrows(ZeitraumException.class, () -> ((Belegung) aktion1).setVon(LocalTime.of(8, 30)));
 	}
 	
 	@Test
 	void testSetBis() {
-		assertThrows(ZeitraumException.class, () -> ((Belegung) aktion).setBis(null));
+		// Zunaechst wird die ordnungsgemaesse Zuordnung eines Werts in die Variable "von" getestet
+		assertDoesNotThrow(() -> ((Belegung) aktion1).setBis(LocalTime.of(9, 50)));
+		assertThrows(ZeitraumException.class, () -> ((Belegung) aktion1).setBis(null));
 		
 		// Im folgenden assert wird der Belegungszeitpunkt "bis" vor dem Belegungszeitpunkt "von" gesetzt
-		assertThrows(ZeitraumException.class, () -> ((Belegung) aktion).setBis(LocalTime.of(9, 18)));
+		assertThrows(ZeitraumException.class, () -> ((Belegung) aktion1).setBis(LocalTime.of(9, 18)));
 		
 		// Als naechstes wird der Belegungszeitpunkt "bis" nach dem Reservierungszeitpunkt "bis" gesetzt
-		assertThrows(ZeitraumException.class, () -> ((Belegung) aktion).setBis(LocalTime.of(10, 30)));
+		assertThrows(ZeitraumException.class, () -> ((Belegung) aktion1).setBis(LocalTime.of(10, 30)));
 	}
 
 }
