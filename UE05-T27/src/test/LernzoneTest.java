@@ -117,6 +117,7 @@ class LernzoneTest {
      * Nach jeder Hinzufügung einer Komponente wird anschließend die printProtokollImZeitraum(Zeitraum zeitraum)-Methode aufgerufen und überprüft,
      * ob der zurückgegebene String, der erwarteten Ausgabe entspricht.
      * @throws InvalidCompositeException
+     * @throws ZeitraumException
      */
     @Test
     void printProtokollImZeitraum() throws InvalidCompositeException, ZeitraumException {

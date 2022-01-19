@@ -54,6 +54,17 @@ class ProtokollWrapperTest {
         stor = new Stornierung(LocalDate.of(2021, 12, 30), LocalTime.of(18, 23), res2);
     }
 
+    /**
+     * Dieser Test testet die Methode printProtokoll() der Klasse ProtokollWrapper.
+     * Dabei wird dem Wrapper eine Lernzone mit zwei Lernplätzen hinzugefügt. Wobei einer dieser Lernplätze
+     * 2 Reservierungen, eine Belegung und eine Stornierung hinzugefügt werden.
+     *
+     * Nach Hinzufügung der Komponenten wird die printProtokoll()-Methode des Wrappers aufgerufen und überprüft, ob
+     * der zurückgegebene String der erwarteten Zeichenkette entspricht. Die korrekte Schritt-für-Schritt-Schachtelung der
+     * einzelnen Komponenten wird bereits in Tests der jeweiligen Komponenten abgedeckt, wodurch in diesem Test nur ein Vergleich mit der
+     * finalen Zeichenkette überprüft wird.
+     * @throws InvalidCompositeException
+     */
     @Test
     void printProtokoll() throws InvalidCompositeException {
         Lernzone lz = new Lernzone("Teichwerk-EG-Z04");
@@ -79,7 +90,18 @@ class ProtokollWrapperTest {
                 "\tLernplatz 2 fuer 1 Person\n" +
                 "Protokollende", wrapper.printProtokoll());
     }
-
+    /**
+     * Dieser Test testet die Methode printProtokollImZeitraum(Zeitraum zeitraum) der Klasse ProtokollWrapper.
+     * Dabei wird dem Wrapper eine Lernzone mit zwei Lernplätzen hinzugefügt. Wobei einem dieser Lernplätze
+     * eine Reservierung und eine Belegung und dem anderen eine Reservierung mit einer Stornierung hinzugefügt werden.
+     *
+     * Nach Hinzufügung der Komponenten wird die printProtokollImZeitraum(Zeitraum zeitraum)-Methode des Wrappers aufgerufen und überprüft, ob
+     * der zurückgegebene String der erwarteten Zeichenkette entspricht. Die korrekte Schritt-für-Schritt-Schachtelung der
+     * einzelnen Komponenten wird bereits in Tests der jeweiligen Komponenten abgedeckt, wodurch in diesem Test nur ein Vergleich mit der
+     * finalen Zeichenkette überprüft wird.
+     * @throws InvalidCompositeException
+     * @throws ZeitraumException
+     */
     @Test
     void printProtokollImZeitraum() throws InvalidCompositeException, ZeitraumException {
         Zeitraum zeitraum = new Zeitraum(LocalDate.of(2021, 9, 30), LocalDate.of(2021, 12, 31));
@@ -103,7 +125,12 @@ class ProtokollWrapperTest {
                 "\t\tStornierung der Reservierung R87654321 am 30.12.2021 um 18:23\n" +
                 "Protokollende", wrapper.printProtokollImZeitraum(zeitraum));
     }
-
+    /**
+     * Dieser Test testet die add(Component comp) Methode der Klasse ProtokollWrapper, dabei wird überprüft, ob das hinzufügen
+     * einer gültigen Komponente erfolgreich ist. Führt das Hinzufügen der Komponete zu keiner Exception, wird überprüft,
+     * ob diese in der Komponenten-Collection der Klasse hinzugefügt wurde, sprich ob die size() Methode einen erwarteten Wert
+     * zurückliefert.
+     */
     @Test
     void add() {
         assertTrue(wrapper.getProtokoll().isEmpty());
@@ -114,7 +141,10 @@ class ProtokollWrapperTest {
         }
         assertEquals(1, wrapper.getProtokoll().size());
     }
-
+    /**
+     * Dieser Test testet ob das Hinzufügen eines Wrappers in einen Wrapper eine erwartete Exception mit entsprechender
+     * Nachricht liefert.
+     */
     @Test
     void invalidCompositionWrapperInWrapper() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
@@ -122,7 +152,10 @@ class ProtokollWrapperTest {
         assertEquals("ungueltige Verschachtelung: ProtokollWrapper kann kein Teil von ProtokollWrapper sein", exception.getMessage());
         assertTrue(wrapper.getProtokoll().isEmpty());
     }
-
+    /**
+     * Dieser Test testet ob das Hinzufügen eines Lernplatzes in einen Wrapper eine erwartete Exception mit entsprechender
+     * Nachricht liefert.
+     */
     @Test
     void invalidCompositionLernplatzInWrapper() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
@@ -130,7 +163,10 @@ class ProtokollWrapperTest {
         assertEquals("ungueltige Verschachtelung: Lernplatz kann kein Teil von ProtokollWrapper sein", exception.getMessage());
         assertTrue(wrapper.getProtokoll().isEmpty());
     }
-
+    /**
+     * Dieser Test testet ob das Hinzufügen einer Reservierung in einen Wrapper eine erwartete Exception mit entsprechender
+     * Nachricht liefert.
+     */
     @Test
     void invalidCompositionReservierungInWrapper() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
@@ -146,7 +182,10 @@ class ProtokollWrapperTest {
         assertEquals("ungueltige Verschachtelung: Reservierung kann kein Teil von ProtokollWrapper sein", exception.getMessage());
         assertTrue(wrapper.getProtokoll().isEmpty());
     }
-
+    /**
+     * Dieser Test testet ob das Hinzufügen einer Belegung in einen Wrapper eine erwartete Exception mit entsprechender
+     * Nachricht liefert.
+     */
     @Test
     void invalidCompositionBelegungInWrapper() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->
@@ -159,7 +198,10 @@ class ProtokollWrapperTest {
         assertEquals("ungueltige Verschachtelung: Belegung kann kein Teil von ProtokollWrapper sein", exception.getMessage());
         assertTrue(wrapper.getProtokoll().isEmpty());
     }
-
+    /**
+     * Dieser Test testet ob das Hinzufügen einer Stornierung in einen Wrapper eine erwartete Exception mit entsprechender
+     * Nachricht liefert.
+     */
     @Test
     void invalidCompositionStornierungInWrapper() {
         Exception exception = assertThrows(InvalidCompositeException.class, () ->

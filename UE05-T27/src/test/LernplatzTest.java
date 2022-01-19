@@ -63,6 +63,17 @@ class LernplatzTest {
         assertEquals(10, lernplatz.getKapazitaet());
     }
 
+    /**
+     * Dieser Test testet die Methode printProtokoll() der Klasse Lernplatz.
+     * Dabei wird in einem ersten Schritt überprüft, ob die Ausgabe eines leeren Lernplatzes mit einer Personenkapazität >1
+     * entsprechenden grammatikalischen Richtlinien folgt.
+     * Selbiges wird mit einem leernen Lernplatz der Kapazität 1 durchgeführt.
+     *
+     * Anschließend werden in dem ersten dieser Lernplätze 2 Reservierungen, eine Belegung und eine Stornierung hinzugefügt.
+     * Nach jeder Hinzufügung einer Komponente wird anschließend die printProtokoll()-Methode aufgerufen und überprüft,
+     * ob der zurückgegebene String, der erwarteten Ausgabe entspricht.
+     * @throws InvalidCompositeException
+     */
     @Test
     void printProtokoll() throws InvalidCompositeException {
         assertEquals("\tLernplatz 5 fuer 6 Personen\n", lernplatz.printProtokoll());
@@ -91,37 +102,40 @@ class LernplatzTest {
                 "\t\tStornierung der Reservierung R87654321 am 25.12.2021 um 12:00\n", lernplatz.printProtokoll());
     }
 
+    /**
+     * Dieser Test testet die Methode printProtokollImZeitraum(Zeitraum zeitraum) der Klasse Lernplatz.
+     * Dabei wird in einem ersten Schritt überprüft, ob die Ausgabe eines leeren Lernplatzes mit einer Personenkapazität >1
+     * entsprechenden grammatikalischen Richtlinien folgt.
+     * Selbiges wird mit einem leernen Lernplatz der Kapazität 1 durchgeführt.
+     * Anschließend wird dem ersten Lernplatz eine Reservierung und eine Stornierung hinzugefügt.
+     * Nach jeder Hinzufügung einer Komponente wird anschließend die printProtokollImZeitraum(Zeitraum zeitraum)-Methode aufgerufen und überprüft,
+     * ob der zurückgegebene String, der erwarteten Ausgabe entspricht.
+     * @throws InvalidCompositeException
+     * @throws ZeitraumException
+     */
     @Test
-    void printProtokollImZeitraum() throws ZeitraumException {
-        Zeitraum zeitraum = new Zeitraum(LocalDate.of(2021, 10, 1), LocalDate.of(2021, 12, 10));
+    void printProtokollImZeitraum() throws ZeitraumException, InvalidCompositeException {
+        Zeitraum zeitraum = new Zeitraum(LocalDate.of(2021, 10, 1), LocalDate.of(2021, 12, 24));
         assertEquals("\tLernplatz 5 fuer 6 Personen\n", lernplatz.printProtokollImZeitraum(zeitraum));
         assertEquals("\tLernplatz 1 fuer 1 Person\n", new Lernplatz(1, 1).printProtokollImZeitraum(zeitraum));
 
+        lernplatz.add(res2);
+        assertEquals("\tLernplatz 5 fuer 6 Personen\n" +
+                "\t\tReservierung R87654321 fuer 03.01.2022 von 11:10 bis 14:21 fuer 6 Personen\n" +
+                "\t\t\tdurch K12345678 am 24.12.2021 um 02:30\n", lernplatz.printProtokollImZeitraum(zeitraum));
+
+        lernplatz.add(stor);
+        assertEquals("\tLernplatz 5 fuer 6 Personen\n" +
+                "\t\tReservierung R87654321 fuer 03.01.2022 von 11:10 bis 14:21 fuer 6 Personen\n" +
+                "\t\t\tdurch K12345678 am 24.12.2021 um 02:30\n", lernplatz.printProtokollImZeitraum(zeitraum));
     }
 
-    @Test
-    void invalidCompositionLernzoneInLernplatz() {
-        Exception exception = assertThrows(InvalidCompositeException.class, () ->
-                lernplatz.add(new Lernzone("Teichwerk-EG-Z01")));
-        assertEquals("ungueltige Verschachtelung: Lernzone kann kein Teil von Lernplatz sein", exception.getMessage());
-        assertTrue(lernplatz.getProtokoll().isEmpty());
-    }
-
-    @Test
-    void invalidCompositionLernplatzInLernplatz() {
-        Exception exception = assertThrows(InvalidCompositeException.class, () ->
-                lernplatz.add(new Lernplatz(1, 15)));
-        assertEquals("ungueltige Verschachtelung: Lernplatz kann kein Teil von Lernplatz sein", exception.getMessage());
-        assertTrue(lernplatz.getProtokoll().isEmpty());
-    }
-    @Test
-    void invalidCompositionWrapperInLernplatz() {
-        Exception exception = assertThrows(InvalidCompositeException.class, () ->
-                lernplatz.add(new ProtokollWrapper()));
-        assertEquals("ungueltige Verschachtelung: ProtokollWrapper kann kein Teil von Lernplatz sein", exception.getMessage());
-        assertTrue(lernplatz.getProtokoll().isEmpty());
-    }
-
+    /**
+     * Dieser Test testet die add(Component comp) Methode der Klasse Lernplatz, dabei wird überprüft, ob das hinzufügen
+     * jeder gültigen Komponente erfolgreich ist. Führt das Hinzufügen der Komponete zu keiner Exception, wird überprüft,
+     * ob diese in der Komponenten-Collection der Klasse hinzugefügt wurde, sprich ob die entsprechende size()-Methode einen erwarteten Wert
+     * zurückliefert.
+     */
     @Test
     void add() {
         try {
@@ -135,4 +149,41 @@ class LernplatzTest {
             fail(e.getMessage());
         }
     }
+
+    /**
+     * Dieser Test testet ob das Hinzufügen einer Lernzone in einen Lernplatz eine erwartete Exception mit entsprechender
+     * Nachricht liefert.
+     */
+    @Test
+    void invalidCompositionLernzoneInLernplatz() {
+        Exception exception = assertThrows(InvalidCompositeException.class, () ->
+                lernplatz.add(new Lernzone("Teichwerk-EG-Z01")));
+        assertEquals("ungueltige Verschachtelung: Lernzone kann kein Teil von Lernplatz sein", exception.getMessage());
+        assertTrue(lernplatz.getProtokoll().isEmpty());
+    }
+
+    /**
+     * Dieser Test testet ob das Hinzufügen eines Lernplatzes in einen Lernplatz eine erwartete Exception mit entsprechender
+     * Nachricht liefert.
+     */
+    @Test
+    void invalidCompositionLernplatzInLernplatz() {
+        Exception exception = assertThrows(InvalidCompositeException.class, () ->
+                lernplatz.add(new Lernplatz(1, 15)));
+        assertEquals("ungueltige Verschachtelung: Lernplatz kann kein Teil von Lernplatz sein", exception.getMessage());
+        assertTrue(lernplatz.getProtokoll().isEmpty());
+    }
+    /**
+     * Dieser Test testet ob das Hinzufügen eines Wrappers in einen Lernplatz eine erwartete Exception mit entsprechender
+     * Nachricht liefert.
+     */
+    @Test
+    void invalidCompositionWrapperInLernplatz() {
+        Exception exception = assertThrows(InvalidCompositeException.class, () ->
+                lernplatz.add(new ProtokollWrapper()));
+        assertEquals("ungueltige Verschachtelung: ProtokollWrapper kann kein Teil von Lernplatz sein", exception.getMessage());
+        assertTrue(lernplatz.getProtokoll().isEmpty());
+    }
+
+
 }

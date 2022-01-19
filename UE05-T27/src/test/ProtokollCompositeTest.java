@@ -15,6 +15,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ProtokollCompositeTest {
 
+    /**
+     * Dieser Test testet das Entfernen von Komponenten aus der jeweiligen Komponenten-Collection. Dabei werden in einer
+     * ersten Phase die Komponenten-Instanzen erstellt und geschachtelt. Anschließend werden die Komponenten aus den
+     * Collections der Parent-Komponente gelöscht. Wobei nach jeder Löschung die Anzahl an Child-Komponenten der jeweiligen Parent-Komponente
+     * überprüft wird, wodurch festgestellt wird, ob die Löschung erfolgreich war.
+     * @throws StudentException
+     * @throws InvalidCompositeException
+     * @throws ZeitraumException
+     * @throws AktionException
+     */
     @Test
     void deleteTest() throws StudentException, InvalidCompositeException, ZeitraumException, AktionException {
         Lernzone lz = new Lernzone("Learning Center-EG-Z01");
