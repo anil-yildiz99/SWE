@@ -2,6 +2,9 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+import model.exceptions.ZeitraumException;
 
 /**
  * Bei dieser Klasse handelt es sich um eine konkrete Implementierung der abstrakten
@@ -19,8 +22,32 @@ public class Reservierung extends Aktion {
     private int personenAnzahl;
     private final Student student;
 
-    public Reservierung(LocalDate aktionsDatum, LocalTime aktionsZeitpunkt, String reservierungsNr, LocalDate reservierungsDatum, LocalTime von, LocalTime bis, int personenAnzahl, Student student) {
+    public Reservierung(LocalDate aktionsDatum, LocalTime aktionsZeitpunkt, String reservierungsNr, LocalDate reservierungsDatum, LocalTime von, LocalTime bis, int personenAnzahl, Student student) throws ZeitraumException {
         super(aktionsDatum, aktionsZeitpunkt);
+        if ((reservierungsDatum == null))
+        	throw new ZeitraumException("Es wurde ein ungueltiges Reservierungsdatum eingegeben!");
+        if (reservierungsDatum.isBefore(aktionsDatum))
+        	throw new ZeitraumException("Das Reservierungsdatum darf nicht vor der Durchfuehrung dieser Aktion sein!");
+        if ((von == null) || (bis == null) || von.isAfter(bis))
+        	throw new ZeitraumException("Der eingegebene Zeitraum ist ungueltig!");
+        
+        this.reservierungsNr = reservierungsNr;
+        this.reservierungsDatum = reservierungsDatum;
+        this.von = von;
+        this.bis = bis;
+        this.personenAnzahl = personenAnzahl;
+        this.student = student;
+    }
+    
+    public Reservierung(LocalDate aktionsDatum, LocalTime aktionsZeitpunkt, DateTimeFormatter formatierer, String reservierungsNr, LocalDate reservierungsDatum, LocalTime von, LocalTime bis, int personenAnzahl, Student student) throws ZeitraumException {
+        super(aktionsDatum, aktionsZeitpunkt, formatierer);
+        if ((reservierungsDatum == null))
+        	throw new ZeitraumException("Es wurde ein ungueltiges Reservierungsdatum eingegeben!");
+        if (reservierungsDatum.isBefore(aktionsDatum))
+        	throw new ZeitraumException("Das Reservierungsdatum darf nicht vor der Durchfuehrung dieser Aktion sein!");
+        if ((von == null) || (bis == null) || von.isAfter(bis))
+        	throw new ZeitraumException("Der eingegebene Zeitraum ist ungueltig!");
+        
         this.reservierungsNr = reservierungsNr;
         this.reservierungsDatum = reservierungsDatum;
         this.von = von;
@@ -41,7 +68,9 @@ public class Reservierung extends Aktion {
         return von;
     }
 
-    public void setVon(LocalTime von) {
+    public void setVon(LocalTime von) throws ZeitraumException {
+    	if ((von == null) || von.isAfter(bis))
+    		throw new ZeitraumException("Der eingegebene Zeitraum ist ungueltig!");
         this.von = von;
     }
 
@@ -49,7 +78,9 @@ public class Reservierung extends Aktion {
         return bis;
     }
 
-    public void setBis(LocalTime bis) {
+    public void setBis(LocalTime bis) throws ZeitraumException {
+    	if ((bis == null) || bis.isBefore(von))
+    		throw new ZeitraumException("Der eingegebene Zeitraum ist ungueltig!");
         this.bis = bis;
     }
 
@@ -58,7 +89,8 @@ public class Reservierung extends Aktion {
     }
 
     public void setPersonenAnzahl(int personenAnzahl) {
-        this.personenAnzahl = personenAnzahl;
+    	if (personenAnzahl != 0)
+    		this.personenAnzahl = personenAnzahl;
     }
 
     public Student getStudent() {

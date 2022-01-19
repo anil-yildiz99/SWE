@@ -1,5 +1,6 @@
 import model.*;
 import model.exceptions.StudentException;
+import model.exceptions.ZeitraumException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -10,10 +11,15 @@ import java.time.LocalTime;
  */
 public class PlatzFuerTeams {
 
-    public static void main(String[] args) throws StudentException {
+    public static void main(String[] args) throws StudentException, ZeitraumException {
         ProtokollWrapper wrapper = new ProtokollWrapper();
 
-        Zeitraum zeitraum = new Zeitraum(LocalDate.of(2021, 11, 30), LocalDate.of(2021, 12, 4));
+        Zeitraum zeitraum = null;
+		try {
+			zeitraum = new Zeitraum(LocalDate.of(2021, 11, 30), LocalDate.of(2021, 12, 4));
+		} catch (ZeitraumException e1) {
+			e1.printStackTrace();
+		}
         Lernzone lz1 = new Lernzone("S3-EG-Z01");
         Lernplatz lp1 = new Lernplatz(1,4);
 

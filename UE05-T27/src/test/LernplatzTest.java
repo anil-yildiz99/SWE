@@ -3,6 +3,8 @@ package test;
 import model.*;
 import model.exceptions.InvalidCompositeException;
 import model.exceptions.StudentException;
+import model.exceptions.ZeitraumException;
+
 import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
@@ -20,7 +22,7 @@ class LernplatzTest {
     private Stornierung stor;
 
     @BeforeAll
-    public void initActions() throws StudentException {
+    public void initActions() throws StudentException, ZeitraumException {
         res = new Reservierung(
                 LocalDate.of(2021, 11, 1),
                 LocalTime.of(15, 20),
@@ -99,7 +101,7 @@ class LernplatzTest {
     }
 
     @Test
-    void printProtokollImZeitraum() {
+    void printProtokollImZeitraum() throws ZeitraumException {
         Zeitraum zeitraum = new Zeitraum(LocalDate.of(2021, 10, 1), LocalDate.of(2021, 12, 10));
         assertEquals("\tLernplatz 5 fuer 6 Personen\n", lernplatz.printProtokollImZeitraum(zeitraum));
         assertEquals("\tLernplatz 1 fuer 1 Person\n", new Lernplatz(1, 1).printProtokollImZeitraum(zeitraum));

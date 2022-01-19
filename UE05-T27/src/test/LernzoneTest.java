@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import model.*;
 import model.exceptions.InvalidCompositeException;
 import model.exceptions.StudentException;
+import model.exceptions.ZeitraumException;
+
 import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
@@ -20,7 +22,7 @@ class LernzoneTest {
     private Stornierung stor;
 
     @BeforeAll
-    void initActions() throws StudentException {
+    void initActions() throws StudentException, ZeitraumException {
         res = new Reservierung(
                 LocalDate.of(2021, 12, 1),
                 LocalTime.of(23, 18),
@@ -103,7 +105,7 @@ class LernzoneTest {
     }
 
     @Test
-    void printProtokollImZeitraum() throws InvalidCompositeException {
+    void printProtokollImZeitraum() throws InvalidCompositeException, ZeitraumException {
         Zeitraum zeitraum = new Zeitraum(LocalDate.of(2021, 11, 30), LocalDate.of(2021, 12, 29));
         assertEquals("Lernzone: S3-EG-Z01\n", lernzone.printProtokollImZeitraum(zeitraum));
         Lernplatz lp = new Lernplatz(1, 5);

@@ -9,6 +9,7 @@ import model.Reservierung;
 import model.Stornierung;
 import model.Student;
 import model.exceptions.StudentException;
+import model.exceptions.ZeitraumException;
 
 class StornierungTest extends LeafPrintProtkollTest {
 
@@ -23,7 +24,9 @@ class StornierungTest extends LeafPrintProtkollTest {
             aktion = new Stornierung(LocalDate.of(2021, 12, 5), LocalTime.of(18, 23), reservierung);
         } catch (StudentException e) {
             e.printStackTrace();
-        }
+        } catch (ZeitraumException e) {
+			e.printStackTrace();
+		}
     }
 
 }

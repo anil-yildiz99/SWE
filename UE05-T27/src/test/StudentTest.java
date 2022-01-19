@@ -22,6 +22,7 @@ class StudentTest {
         assertThrows(StudentException.class, () -> new Student("f12345678"));
         assertThrows(StudentException.class, () -> new Student("k123456789"));
         assertThrows(StudentException.class, () -> new Student("k12345a78"));
+        assertThrows(StudentException.class, () -> new Student(null));
     }
 
     @Test
@@ -31,9 +32,10 @@ class StudentTest {
         try {
             student = new Student("k87654321");
         } catch (StudentException e) {
-            e.printStackTrace();
+        	e.printStackTrace();
         }
         assertEquals("k87654321", student.getMatrikelnummer());
+        assertNotEquals("K87654321", student.getMatrikelnummer());
     }
 
 }

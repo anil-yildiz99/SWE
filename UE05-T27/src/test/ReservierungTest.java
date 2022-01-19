@@ -1,14 +1,19 @@
 package test;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import model.Reservierung;
 import model.Student;
 import model.exceptions.StudentException;
+import model.exceptions.ZeitraumException;
 
 class ReservierungTest extends LeafPrintProtkollTest {
 
@@ -23,7 +28,57 @@ class ReservierungTest extends LeafPrintProtkollTest {
 					LocalTime.of(9, 15), LocalTime.of(10, 0), 1, new Student("K12345679"));
 		} catch (StudentException e) {
 			e.printStackTrace();
+		} catch (ZeitraumException e) {
+			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	void testReservierung() {
+		// Die folgenden zwei Asserts testen das Reservierungsdatum
+		assertThrows(ZeitraumException.class, () -> new Reservierung(LocalDate.of(2021, 11, 30), LocalTime.of(23, 18),
+		        "R08154711", null,
+		        LocalTime.of(9, 15), LocalTime.of(10, 0), 1, new Student("K12345679")));
+		assertThrows(ZeitraumException.class, () -> new Reservierung(LocalDate.of(2021, 11, 30), LocalTime.of(23, 18),
+		        "R08154711", LocalDate.of(2021, 11, 10),
+		        LocalTime.of(9, 15), LocalTime.of(10, 0), 1, new Student("K12345679")));
+		
+		// Die folgenden zwei Asserts testen den Zeitraum einer Reservierung
+		assertThrows(ZeitraumException.class, () -> new Reservierung(LocalDate.of(2021, 11, 30), LocalTime.of(23, 18),
+		        "R08154711", LocalDate.of(2021, 12, 6),
+		        null, LocalTime.of(10, 0), 1, new Student("K12345679")));
+		assertThrows(ZeitraumException.class, () -> new Reservierung(LocalDate.of(2021, 11, 30), LocalTime.of(23, 18),
+		        "R08154711", LocalDate.of(2021, 12, 6),
+		        LocalTime.of(9, 15), null, 1, new Student("K12345679")));
+		
+		// Als naechstes wird ueberprueft, ob eine ZeitraumException geworfen wird, wenn der Zeitpunkt "von" nach dem 
+		// Zeitpunkt "bis" initialisiert wird
+		assertThrows(ZeitraumException.class, () -> new Reservierung(LocalDate.of(2021, 11, 30), LocalTime.of(23, 18),
+		        "R08154711", LocalDate.of(2021, 12, 6),
+		        LocalTime.of(12, 30), LocalTime.of(10, 0), 1, new Student("K12345679")));
+	}
+	
+	@Test
+	void testSetVon() {
+		assertThrows(ZeitraumException.class, () -> ((Reservierung) aktion).setVon(null));
+		assertThrows(ZeitraumException.class, () -> ((Reservierung) aktion).setVon(LocalTime.of(12, 30)));
+	}
+	
+	@Test
+	void testSetBis() {
+		assertThrows(ZeitraumException.class, () -> ((Reservierung) aktion).setBis(null));
+		assertThrows(ZeitraumException.class, () -> ((Reservierung) aktion).setBis(LocalTime.of(8, 10)));
+	}
+	
+	/**
+	 * Hier wird grundsaetzlich der Setter "setPersonenAnzahl" getestet, jedoch
+	 * ist ein Zugriff auf dessen Getter unabdingbar. 
+	 */
+	@Test
+	void testPersonenAnzahl() {
+		assertEquals(1, ((Reservierung) aktion).getPersonenAnzahl());
+		((Reservierung) aktion).setPersonenAnzahl(0);
+		assertEquals(1, ((Reservierung) aktion).getPersonenAnzahl());
 	}
 
 }

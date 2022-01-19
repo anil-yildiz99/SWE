@@ -2,6 +2,9 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+import model.exceptions.ZeitraumException;
 
 /**
  * Hier handelt es sich um eine konkrete Implementierung der abstrakten Klasse
@@ -16,8 +19,15 @@ public class Belegung extends Aktion {
     private LocalTime von;
     private LocalTime bis;
 
-    public Belegung(LocalDate aktionsDatum, LocalTime aktionsZeitpunkt, Reservierung reservierung, LocalTime von, LocalTime bis) {
+    public Belegung(LocalDate aktionsDatum, LocalTime aktionsZeitpunkt, Reservierung reservierung, LocalTime von, LocalTime bis) throws ZeitraumException {
         super(aktionsDatum, aktionsZeitpunkt);
+        this.reservierung = reservierung;
+        this.von = von;
+        this.bis = bis;
+    }
+    
+    public Belegung(LocalDate aktionsDatum, LocalTime aktionsZeitpunkt, DateTimeFormatter formatierer, Reservierung reservierung, LocalTime von, LocalTime bis) throws ZeitraumException {
+        super(aktionsDatum, aktionsZeitpunkt, formatierer);
         this.reservierung = reservierung;
         this.von = von;
         this.bis = bis;

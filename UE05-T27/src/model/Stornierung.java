@@ -2,6 +2,9 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+import model.exceptions.ZeitraumException;
 
 /**
  * Diese Klasse ist eine weitere Implementierung der abstrakten Klasse "Aktion".
@@ -13,8 +16,13 @@ import java.time.LocalTime;
 public class Stornierung extends Aktion {
     private final Reservierung reservierung;
 
-    public Stornierung(LocalDate aktionsDatum, LocalTime aktionsZeitpunkt, Reservierung reservierung) {
+    public Stornierung(LocalDate aktionsDatum, LocalTime aktionsZeitpunkt, Reservierung reservierung) throws ZeitraumException {
         super(aktionsDatum, aktionsZeitpunkt);
+        this.reservierung = reservierung;
+    }
+    
+    public Stornierung(LocalDate aktionsDatum, LocalTime aktionsZeitpunkt, DateTimeFormatter formatierer, Reservierung reservierung) throws ZeitraumException {
+        super(aktionsDatum, aktionsZeitpunkt, formatierer);
         this.reservierung = reservierung;
     }
 

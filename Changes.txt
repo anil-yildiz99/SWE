@@ -3,13 +3,18 @@ in der Vorversion haben diese Methoden mittels System.out.println() direkt das P
 In dieser Version wurden die Methoden so abgeändert, dass sie anstelle der Konsolenausgabe einen String zurückgeben.
 
 Exception-handling:
-in der Vorversion wurde direkt in den einzelnen Klassen die InvalidCompositeException abgefangen und mittels System.err.println
+In der Vorversion wurde direkt in den einzelnen Klassen die InvalidCompositeException abgefangen und mittels System.err.println
 die Errormessage auf der Konsole ausgegeben. In dieser Version wurde das Exception-handling angepasst, sodass statt einer Ausgabe
 die Exception gethrowed wird. Das hat den Vorteil, dass jetzt in der aufrufenden Klasse individuelles Exception-handling vollzogen werden
 kann. Außerdem muss für Exception-Unit-Tests nicht der Ausgabestream abgefragt werden, wodurch Probleme mit System-verschiedenen End-of-Line-Seperators
 vermieden werden.
+Als nächstes wurde eine Exception "StudentException" hinzugefügt. Diese Exception wird bei der Initialisierung einer Studenteninstanz geworfen, wenn die Matrikelnummer des Studenten ungültig ist.
+Eine weitere Exception, die hinzugefügt wurde, ist "ZeitraumException". Diese Exception wird geworfen, wenn ein Datum ungültig ist (z.B.: Null, oder ein Reservierungsdatum ist vor der Tätigung dieses Datums) oder wenn zeitliche Angaben ungültig sind (z.B.: Die Uhrzeit "von" tritt nach der Uhrzeit "bis" auf)
 
 Protokoll-Wrapper-Komposition:
 In der Vorversion wäre es theoretisch möglich gewesen, einem Protokollwrapper andere Komponenten ohne Einschränkung hinzuzufügen.
 Jetzt darf der Wrapper nur noch Lernzonen enthalten.
+
+Leaf-Klassen:
+Zu den konkreten Leaf-Klassen (Reservierung, Belegung, Sotrnierung) wurde jeweils ein weiterer Konstruktor hinzugefügt, welche zusätzlich noch das Feld "datumsFormatierer" initialisiert.
 

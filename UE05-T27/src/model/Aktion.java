@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import model.exceptions.ZeitraumException;
+
 /**
  * Bei dieser Klasse handelt es sich um den "Leaf" des Composite Patterns.
  * Weiters handelt es sich hier um eine abstrakte Klasse, die von den
@@ -15,27 +17,33 @@ import java.time.format.DateTimeFormatter;
  */
 public abstract class Aktion extends Component {
     private LocalDate aktionsDatum;
-    private  LocalTime aktionsZeitpunkt;
+    private LocalTime aktionsZeitpunkt;
     private DateTimeFormatter datumsFormatierer;
 
-    public Aktion(LocalDate aktionsDatum, LocalTime aktionsZeitpunkt) {
+    public Aktion(LocalDate aktionsDatum, LocalTime aktionsZeitpunkt) throws ZeitraumException {
+    	if ((aktionsDatum == null) || (aktionsZeitpunkt == null))
+			throw new ZeitraumException("Das Datum bzw. die Uhrzeit der durchgefuehrten Aktion ist ungueltig!");
+    	
         this.aktionsDatum = aktionsDatum;
         this.aktionsZeitpunkt = aktionsZeitpunkt;
         datumsFormatierer = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     }
 
     // alternativer Konstruktor, im Falle einer gewuenschten Abweichung vom Standard-Datumsformat
-    public Aktion(LocalDate aktionsDatum, LocalTime aktionsZeitpunkt, DateTimeFormatter formatierer) {
-        this.aktionsDatum = aktionsDatum;
-        this.aktionsZeitpunkt = aktionsZeitpunkt;
-        datumsFormatierer = formatierer;
+    public Aktion(LocalDate aktionsDatum, LocalTime aktionsZeitpunkt, DateTimeFormatter formatierer) throws ZeitraumException {
+    	this(aktionsDatum, aktionsZeitpunkt);
+    	
+        if (formatierer != null) datumsFormatierer = formatierer;
     }
 
     public LocalDate getAktionsDatum() {
         return aktionsDatum;
     }
 
-    public void setAktionsDatum(LocalDate aktionsDatum) {
+    public void setAktionsDatum(LocalDate aktionsDatum) throws ZeitraumException {
+    	if (aktionsDatum == null)
+    		throw new ZeitraumException("Das Datum der durchgefuehrten Aktion ist ungueltig!");
+    	
         this.aktionsDatum = aktionsDatum;
     }
 
@@ -43,7 +51,10 @@ public abstract class Aktion extends Component {
         return aktionsZeitpunkt;
     }
 
-    public void setAktionsZeitpunkt(LocalTime aktionsZeitpunkt) {
+    public void setAktionsZeitpunkt(LocalTime aktionsZeitpunkt) throws ZeitraumException {
+    	if (aktionsZeitpunkt == null)
+    		throw new ZeitraumException("Die Uhrzeit der durchgefuehrten Aktion ist ungueltig!");
+    	
         this.aktionsZeitpunkt = aktionsZeitpunkt;
     }
 
@@ -52,7 +63,8 @@ public abstract class Aktion extends Component {
     }
 
     public void setDatumsFormatierer(DateTimeFormatter datumsFormatierer) {
-        this.datumsFormatierer = datumsFormatierer;
+    	if (datumsFormatierer != null)
+    		this.datumsFormatierer = datumsFormatierer;
     }
 
     /**

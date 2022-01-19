@@ -10,6 +10,7 @@ import model.Belegung;
 import model.Reservierung;
 import model.Student;
 import model.exceptions.StudentException;
+import model.exceptions.ZeitraumException;
 
 class BelegungTest extends LeafPrintProtkollTest {
 	
@@ -23,6 +24,8 @@ class BelegungTest extends LeafPrintProtkollTest {
 			        LocalTime.of(9, 15), LocalTime.of(10, 0), 1, new Student("K12345679"));
 			aktion = new Belegung(reservierung.getReservierungsDatum(), LocalTime.of(9, 21), reservierung, LocalTime.of(9, 21), LocalTime.of(9, 48));
 		} catch (StudentException e) {
+			e.printStackTrace();
+		} catch (ZeitraumException e) {
 			e.printStackTrace();
 		}
 	}

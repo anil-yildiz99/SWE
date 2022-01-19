@@ -3,6 +3,8 @@ package test;
 import model.*;
 import model.exceptions.InvalidCompositeException;
 import model.exceptions.StudentException;
+import model.exceptions.ZeitraumException;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +30,7 @@ class ProtokollWrapperTest {
     }
 
     @BeforeAll
-    void initAktionen() throws StudentException {
+    void initAktionen() throws StudentException, ZeitraumException {
         res = new Reservierung(
                 LocalDate.of(2022, 1, 5),
                 LocalTime.of(22, 11),
@@ -78,7 +80,7 @@ class ProtokollWrapperTest {
     }
 
     @Test
-    void printProtokollImZeitraum() throws InvalidCompositeException {
+    void printProtokollImZeitraum() throws InvalidCompositeException, ZeitraumException {
         Zeitraum zeitraum = new Zeitraum(LocalDate.of(2021, 9, 30), LocalDate.of(2021, 12, 31));
         Lernzone lz = new Lernzone("Kepler Hall-EG-Z09");
         wrapper.add(lz);

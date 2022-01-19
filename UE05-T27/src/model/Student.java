@@ -10,7 +10,7 @@ public class Student {
     private final String matrikelnummer;
 
     public Student(String matrikelnummer) throws StudentException {
-        if ((matrikelnummer.length() != 9) || ((matrikelnummer.charAt(0) != 107) && (matrikelnummer.charAt(0) != 75)))
+        if ((matrikelnummer == null) || (matrikelnummer.length() != 9) || ((matrikelnummer.charAt(0) != 107) && (matrikelnummer.charAt(0) != 75)))
             throw new StudentException();
         for (int i=1; i < matrikelnummer.length(); i++) {
             if ((matrikelnummer.charAt(i) < 48) || (matrikelnummer.charAt(i) > 57))
